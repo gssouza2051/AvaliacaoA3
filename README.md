@@ -1,9 +1,18 @@
-* BEM VINDOS AO NOSSO PROJETO DA A3
+# BEM VINDOS AO NOSSO PROJETO DA A3
 
-** Integrantes:
+## 💻 Tecnologias usadas:
+
+- Java
+- Git/ Github
+- PostgreSQL
+
+## Integrantes:
 - Cristiano
 - Gabriel
 - Mauricio
 - Rodrigo
--
-- 
+- Sodré
+- Levi
+
+
+
