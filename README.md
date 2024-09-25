@@ -62,9 +62,9 @@ Objetivos:
   
 ### Integrantes:
 
-Cristiano
-Gabriel
-Mauricio
-Rodrigo
-Sodré
-Levi
+- Cristiano
+- Gabriel
+- Mauricio
+- Rodrigo
+- Sodré
+- Levi
