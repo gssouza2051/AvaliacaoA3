@@ -1,0 +1,11 @@
+{
+    "database": {
+        "ferramenta": "postgresql",
+        "usuario": "postgres",
+        "senha": "secreta007",
+        "host": "localhost",
+        "port": "5432",
+        "database": "postgres",
+        "require": "allow"
+    }
+}

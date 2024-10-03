@@ -1,0 +1,17 @@
+# Desconsiderar arquivos do sistema operacional
+/tmp
+/temp
+.DS_Store
+
+# Desconsiderar arquivos de testes
+tests/
+
+# Desconsiderar arquivos de pycache
+*__pycache__/
+.pyc
+
+# Ignorar arquivos de ambiente específicos
+.env
+
+# Ignorar arquivo JSON que armazena as credenciais do banco
+.json
