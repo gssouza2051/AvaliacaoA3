@@ -11,5 +11,5 @@ def check_commit_message(message):
 if __name__ == "__main__":
     message = sys.argv[1]
     if not check_commit_message(message):
-        print("A mensagem do commit precisa conter uma das palavras-chave: fix, feat, chore, docs, refactor, test, style")
+        print("A mensagem do commit precisa conter uma das palavras-chave: fix, feat, chore, docs, refactor, test, style.")
         sys.exit(1)
