@@ -8,6 +8,7 @@ def check_commit_message(message):
 
 if __name__ == "__main__":
     message = sys.argv[1]
+    print(f'messagem:{message}')
     if not check_commit_message(message):
-        print("Mensagem de commit inválida: use palavras-chave como 'feat', 'fix', etc.")
+        print("Mensagem de commit inválida: use palavras-chave como 'feat', 'fix', etc..")
         sys.exit(1)
