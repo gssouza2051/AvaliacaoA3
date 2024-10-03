@@ -15,8 +15,7 @@ def conecta_db():
     port = acessos.obter_credencial("database", "port")
     database = acessos.obter_credencial("database", "database")
     require = acessos.obter_credencial("database", "require")
-
-    #engine = create_engine("postgresql://postgres:secreta007@localhost:5432/postgres")
+    
     engine = create_engine(f"{ferramenta}://{usuario}:{senha}@{host}:{port}/{database}")
     return engine
 
