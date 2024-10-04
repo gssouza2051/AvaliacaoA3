@@ -5,7 +5,7 @@ from modules import db
 def main():
     conn = db.conecta_db()
 
-    base_usuarios = db.realiza_consulta_db( 'select * from saude.tbl_usuarios limit 10', conn)
+    base_usuarios = db.realiza_consulta_db( 'select * from saude.tbl_usuarios limit 10.', conn)
     print(f'\nBase usuarios :\n{base_usuarios}')
 
     base_medicos = db.realiza_consulta_db( 'select * from saude.tbl_medicos limit 10', conn)

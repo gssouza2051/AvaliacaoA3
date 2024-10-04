@@ -2,7 +2,6 @@
 /tmp
 /temp
 .DS_Store
-/node_modules
 
 # Desconsiderar arquivos de testes
 tests/
