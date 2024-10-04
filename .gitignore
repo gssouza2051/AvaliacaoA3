@@ -3,6 +3,7 @@
 /temp
 .DS_Store
 
+
 # Desconsiderar arquivos de testes
 tests/
 
