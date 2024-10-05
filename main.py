@@ -6,21 +6,26 @@ import tkinter as tk
 from modules import db
 
 def main():
-    conn = db.conecta_db()
+    #conn = db.conecta_db()
 
-    base_usuarios = db.realiza_consulta_db( 'select * from saude.tbl_usuarios limit 10.', conn)
+    #base_usuarios = db.realiza_consulta_db( 'select * from saude.tbl_usuarios limit 10.', conn)
+    base_usuarios = ''
     print(f'\nBase usuarios :\n{base_usuarios}')
 
-    base_medicos = db.realiza_consulta_db( 'select * from saude.tbl_medicos limit 10', conn)
+    #base_medicos = db.realiza_consulta_db( 'select * from saude.tbl_medicos limit 10', conn)
+    base_medicos = ''
     print(f'\nBase médicos :\n{base_medicos}')
 
-    base_pacientes = db.realiza_consulta_db( 'select * from saude.tbl_pacientes limit 10', conn)
+    #base_pacientes = db.realiza_consulta_db( 'select * from saude.tbl_pacientes limit 10', conn)
+    base_pacientes = ''
     print(f'\nBase pacientes :\n{base_pacientes}')
 
-    base_consultas = db.realiza_consulta_db( 'select * from saude.tbl_consultas limit 10', conn)
+    #base_consultas = db.realiza_consulta_db( 'select * from saude.tbl_consultas limit 10', conn)
+    base_consultas = ''
     print(f'\nBase consultas :\n{base_consultas}')
 
-    base_atestados = db.realiza_consulta_db( 'select * from saude.tbl_atestados limit 10', conn)
+    #base_atestados = db.realiza_consulta_db( 'select * from saude.tbl_atestados limit 10', conn)
+    base_atestados = ''
     print(f'\nBase atestados :\n{base_atestados}')
 
 
