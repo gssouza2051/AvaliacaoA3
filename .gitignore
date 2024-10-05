@@ -15,4 +15,4 @@ tests/
 
 # Ignorar arquivo JSON que armazena as credenciais do banco e arquivos txt
 .json
-.txt
+*requirements.txt
