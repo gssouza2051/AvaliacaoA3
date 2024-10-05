@@ -1,3 +1,6 @@
+#.\venv\Scripts\activate 
+#deactivate
+
 import tkinter as tk
 #from modules import page
 from modules import db
