@@ -9,7 +9,9 @@ jobs:
           - name: Copia os arquivos do repositório
             uses: actions/checkout@v3.3.0
         
-          - name: Roda outro comando!
-            run: echo $(ls)
+          - name: Instalar o python
+            uses: actions/setup-python@v4
+            with:
+              python-version: '3.11.9'
 
 
