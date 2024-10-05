@@ -17,10 +17,10 @@ jobs:
             with:
               python-version: '3.11.9'
 
-          - name: Instalar o Poetry
-            run: pip install poetry
+          - name: Instalar o pip
+            run: pip install pip
 
           - name: Instalar as dependencias do projeto
-            run: poetry install
+            run: pip install -r requirements.txt
 
 

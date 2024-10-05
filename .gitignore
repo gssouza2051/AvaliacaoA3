@@ -13,5 +13,6 @@ tests/
 # Ignorar arquivos de ambiente específicos
 .env
 
-# Ignorar arquivo JSON que armazena as credenciais do banco
+# Ignorar arquivo JSON que armazena as credenciais do banco e arquivos txt
 .json
+.txt
