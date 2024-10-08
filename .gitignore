@@ -14,5 +14,5 @@ tests/
 .env
 
 # Ignorar arquivo JSON que armazena as credenciais do banco e arquivos txt
-.json
-*requirements.txt
+ents.txt
+node_modules
