@@ -2,7 +2,7 @@
 #deactivate
 
 from customtkinter import *
-app = CTk()
+'''app = CTk()
 app.geometry('500x400')
 
 tabview = CTkTabview(master=app)
@@ -21,7 +21,7 @@ label_2.pack(padx=20, pady=20)
 label_3 = CTkLabel(master=app, text='This is tab 3')
 label_3.pack(padx=20, pady=20)
 
-app.mainloop()
+app.mainloop()'''
 
 
 
