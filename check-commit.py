@@ -9,7 +9,7 @@ def check_commit_message(repo_path, keywords):
 
     for commit in commits:
         for keyword in keywords:
-            if keyword == commit.message:
+            if keyword in commit.message:
                 print(f"Commit {commit.hexsha} contém a palavra-chave: {keyword}")
                 palavra_chave = True
                 break
