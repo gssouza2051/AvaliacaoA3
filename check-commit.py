@@ -26,14 +26,12 @@ def check_commit_message(repo_path, keywords):
 
     print(f'Mensagem do ultimo commit: {last_commit.message}')
     last_commit_mensagem = last_commit.message.split(':')[0]
-    print(f'last_commit_mensagem: {last_commit_mensagem}')
     for keyword in keywords:
         if keyword == last_commit_mensagem:
             print(f"Commit {last_commit.hexsha} contém a palavra-chave: {keyword}")
             palavra_chave = True  # Encontramos a palavra-chave, podemos sair da função
 
     if palavra_chave == False:
-        #print(f"O último commit {last_commit.hexsha} não contém nenhuma das palavras-chave!")
         raise ValueError(f'Erro:O último commit {last_commit.hexsha} não contém nenhuma das palavras-chave!')
 
     
