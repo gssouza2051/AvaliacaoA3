@@ -9,7 +9,7 @@ def check_commit_message(repo_path, keywords):
 
     for commit in commits:
         for keyword in keywords:
-            if keyword in commit.message:
+            if keyword == commit.message:
                 print(f"Commit {commit.hexsha} contém a palavra-chave: {keyword}")
                 palavra_chave = True
                 break
@@ -22,4 +22,16 @@ def check_commit_message(repo_path, keywords):
 # Exemplo de uso:
 repo_path = os.getcwd()
 keywords = ['feat', 'fix', 'docs','refactor', 'test', 'chore', 'style']
+
+'''
+Conventional Commits
+
+1.feat: -> Adição de uma nova funcionalidade
+2.fix: -> Correção de um bug
+3.docs: -> Alterações na documentação
+4.style: -> Melhorias que não afetam o significado do código
+5.refactor: -> Refatoração de código existente
+6.test: -> Adição ou modificação de testes
+7.chore: -> Tarefas de manutenção,ajustes na configuração,etc.'''
+
 check_commit_message(repo_path, keywords)
