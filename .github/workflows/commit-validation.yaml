@@ -1,0 +1,13 @@
+name: Validate Conventional Commits
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: teste commit
+        run: python check-commit.py
