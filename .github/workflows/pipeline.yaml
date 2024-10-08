@@ -6,9 +6,9 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-
+          - uses: actions/checkout@v3
           - name: Verificar mensagens de commit
-            run: python ./check_commit.py
+            run: python C:/Users/biel_/OneDrive/Documentos/FACULDADE/2024.2/Técnias_de_Eng_de_Software/AvaliacaoA3/A3/AvaliacaoA3/check_commit.py
 
           - name: Copia os arquivos do repositório
             uses: actions/checkout@v3.3.0
