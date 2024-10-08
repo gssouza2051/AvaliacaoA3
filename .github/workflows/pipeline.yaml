@@ -7,7 +7,7 @@ jobs:
 
         steps:
           - name: Listando arquivos
-            run: ls
+            run: dir
 
           - name: Verificar mensagens de commit
             run: python ckeck_commit.py
