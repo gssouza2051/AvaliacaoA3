@@ -1,8 +1,40 @@
 #.\venv\Scripts\activate 
 #deactivate
 
-import tkinter as tk
-#from modules import page
+from customtkinter import *
+app = CTk()
+app.geometry('500x400')
+
+tabview = CTkTabview(master=app)
+tabview.pack(padx=20,pady=20)
+
+tabview.add('Tab 1')
+tabview.add('Tab 2')
+tabview.add('Tab 3')
+
+label_1 = CTkLabel(master=app, text='This is tab 1')
+label_1.pack(padx=20, pady=20)
+
+label_2 = CTkLabel(master=app, text='This is tab 2')
+label_2.pack(padx=20, pady=20)
+
+label_3 = CTkLabel(master=app, text='This is tab 3')
+label_3.pack(padx=20, pady=20)
+
+app.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
 from modules import db
 
 def main():
@@ -31,50 +63,3 @@ def main():
 
 
 main()
-
-
-
-
-
-
-
-
-
-
-'''def verificar_login():
-    usuario = entrada_usuario.get()
-    senha = entrada_senha.get()
-
-    # Substitua por sua lógica de verificação de credenciais
-    if usuario == "gabriel" and senha == "9090":
-        mensagem.config(text="Login bem-sucedido!")
-    else:
-        mensagem.config(text="Usuário ou senha inválidos.")
-
-# Cria a janela principal
-janela = tk.Tk()
-janela.title("Tela de Login")
-
-# Define as dimensões da janela (800 pixels de largura por 600 pixels de altura)
-janela.geometry("800x600")
-
-# Cria os labels e campos de entrada
-label_usuario = tk.Label(janela, text="Usuário:")
-label_usuario.pack()
-entrada_usuario = tk.Entry(janela)
-entrada_usuario.pack()
-
-label_senha = tk.Label(janela, text="Senha:")
-label_senha.pack()
-entrada_senha = tk.Entry(janela, show="*")  # Mostra asteriscos no lugar da senha
-entrada_senha.pack()
-
-# Cria o botão
-botao_login = tk.Button(janela, text="Login", command=verificar_login)
-botao_login.pack()
-
-# Cria um label para exibir mensagens
-mensagem = tk.Label(janela, text="")
-mensagem.pack()
-
-janela.mainloop()'''
