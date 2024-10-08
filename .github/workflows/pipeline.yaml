@@ -1,6 +1,6 @@
 
 name: pipeline
-on: [pull_request]
+on: [push,pull_request]
 
 jobs:
     test:
@@ -25,7 +25,8 @@ jobs:
           - name: Instalar as dependencias do projeto
             run: pip install -r requirements.txt
 
-          
+          - name: Validando formato do commit
+            run: python check-commit.py
 
           - name: Executar os testes
             run: python main.py
