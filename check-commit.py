@@ -4,19 +4,17 @@ import sys
 
 def check_commit_message(repo_path, keywords):
     repo = git.Repo(repo_path)
-    commits = list(repo.iter_commits('HEAD'))
+    last_commit = repo.head.commit
     palavra_chave = False
 
-    for commit in commits:
-        for keyword in keywords:
-            if keyword in commit.message:
-                print(f"Commit {commit.hexsha} contém a palavra-chave: {keyword}")
-                palavra_chave = True
-                break
-            else:
-                print(f"Commit {commit.hexsha} não contém nenhuma das palavras-chave!")
+    for keyword in keywords:
+        if keyword in last_commit.message:
+            print(f"Commit {last_commit.hexsha} contém a palavra-chave: {keyword}")
+            palavra_chave = True  # Encontramos a palavra-chave, podemos sair da função
+
     if palavra_chave == False:
-        sys.exit()
+        print(f"O último commit {last_commit.hexsha} não contém nenhuma das palavras-chave!")
+
     
 
 # Exemplo de uso:
