@@ -32,6 +32,8 @@ def check_commit_message(repo_path, keywords):
 
     if palavra_chave == False:
         print(f"O último commit {last_commit.hexsha} não contém nenhuma das palavras-chave!")
+        if palavra == False:
+            print(f'Error')
 
     
 main()
