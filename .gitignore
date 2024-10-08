@@ -17,4 +17,4 @@ tests/
 .json
 *requirements.txt
 node_modules
-venv
+venv/
