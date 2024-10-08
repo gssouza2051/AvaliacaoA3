@@ -13,5 +13,5 @@ jobs:
       - name: Copia os arquivos do repositório
         uses: actions/checkout@v3.3.0
 
-      - name: teste commit
+      - name: Validando formato do commit
         run: python check-commit.py
