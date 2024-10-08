@@ -26,7 +26,7 @@ def check_commit_message(repo_path, keywords):
 
     print(f'Mensagem do ultimo commit: {last_commit.message}')
     for keyword in keywords:
-        if keyword in last_commit.message:
+        if keyword == last_commit.message:
             print(f"Commit {last_commit.hexsha} contém a palavra-chave: {keyword}")
             palavra_chave = True  # Encontramos a palavra-chave, podemos sair da função
 
