@@ -2,7 +2,7 @@
 #deactivate
 
 from customtkinter import *
-print('testee')
+
 '''app = CTk()
 app.geometry('500x400')
 
