@@ -9,6 +9,7 @@ jobs:
           - uses: actions/checkout@v3
           - name: Verificar mensagens de commit
             run: ls
+            run: python ckeck_commit.py
 
           - name: Copia os arquivos do repositório
             uses: actions/checkout@v3.3.0
