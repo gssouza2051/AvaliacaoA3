@@ -3,7 +3,7 @@
 
 ## 💻 Tecnologias usadas:
 
-- Java
+- Python
 - Git/ Github
 - PostgreSQL
 ## ⌛ Cronograma:

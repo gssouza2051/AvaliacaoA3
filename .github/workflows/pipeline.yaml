@@ -2,11 +2,21 @@
 name: pipeline
 on: [push, pull_request]
 
+
+    
 jobs:
     test:
         runs-on: ubuntu-latest
 
         steps:
+
+          - uses: actions/checkout@v3
+          - uses: actions/setup-node@v3
+            with:
+              node-version: '16'
+          - run: npm install
+          - name: Validate Commits
+            run: npx commitlint --edit $(git rev-parse HEAD)
 
           - name: Copia os arquivos do repositório
             uses: actions/checkout@v3.3.0
@@ -24,9 +34,6 @@ jobs:
 
           - name: Instalar as dependencias do projeto
             run: pip install -r requirements.txt
-
-          - name: teste commit
-            run: python check-commit.py
 
           - name: Executar os testes
             run: python main.py
