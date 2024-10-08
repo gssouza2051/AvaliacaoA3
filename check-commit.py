@@ -1,4 +1,5 @@
 import git
+import os
 
 def check_commit_message(repo_path, keywords):
     repo = git.Repo(repo_path)
@@ -12,6 +13,6 @@ def check_commit_message(repo_path, keywords):
                 print(f"Commit {commit.hexsha} não contém nenhuma das palavras-chave!")
 
 # Exemplo de uso:
-repo_path = r'C:\Users\biel_\OneDrive\Documentos\FACULDADE\2024.2\Técnias_de_Eng_de_Software\AvaliacaoA3\A3\AvaliacaoA3'
+repo_path = os.getcwd()
 keywords = ['feat', 'fix', 'docs','refactor', 'test', 'chore', 'style']
 check_commit_message(repo_path, keywords)
