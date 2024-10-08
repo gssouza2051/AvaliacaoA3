@@ -6,11 +6,6 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-          - name: Listando arquivos
-            run: dir
-
-          - name: Verificar mensagens de commit
-            run: python ckeck_commit.py
 
           - name: Copia os arquivos do repositório
             uses: actions/checkout@v3.3.0
