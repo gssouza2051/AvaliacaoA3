@@ -1,10 +1,10 @@
 {
     "database": {
         "ferramenta": "postgresql",
-        "usuario": "postgres",
-        "senha": "secreta007",
-        "host": "localhost",
-        "port": "5432",
+        "usuario": "postgres.ixfabbkuzivoangpvmov",
+        "senha": "TXui66sms_9uaJf",
+        "host": "aws-0-sa-east-1.pooler.supabase.com",
+        "port": "6543",
         "database": "postgres",
         "require": "allow"
     }
