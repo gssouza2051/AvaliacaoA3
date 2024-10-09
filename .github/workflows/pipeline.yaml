@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: '3.11.9'
       - name: Install dependencies (cached)
-        run: pip install
+        run: pip install pip
       - name: Validating commit format
         run: python check-commit.py
       - name: Executar os testes
