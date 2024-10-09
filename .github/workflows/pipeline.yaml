@@ -7,20 +7,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.3.0
-      - name: Cache pip dependencies
+      - name: Cache pip dependencias
         uses: actions/cache@v3
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
-      - name: Install Python
+      - name: Instale Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11.9'
-      - name: Install dependencies (cached)
-        run: pip list
-      - name: Validating commit format
+      - name: Instale as dependências (cachê)
+        run: pip install -r requirements.txt
+      - name: Valide Conventional commits
         run: python check-commit.py
-      - name: Executar os testes
+      - name: Execute os testes
         run: python main.py
