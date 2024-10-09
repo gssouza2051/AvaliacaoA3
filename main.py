@@ -17,7 +17,7 @@
 
 
 def main():
-    print('teste')
+    print('teste.')
     #janela = page.config()
     #page.janela_login(janela)
 
