@@ -1,20 +1,3 @@
-# Desconsiderar arquivos do sistema operacional
-/tmp
-/temp
-.DS_Store
-
-# Desconsiderar arquivos de testes
-tests/
-
-# Desconsiderar arquivos de pycache
-*__pycache__/
-.pyc
-
-# Ignorar arquivos de ambiente específicos
-.env
-
-# Ignorar arquivo JSON que armazena as credenciais do banco e arquivos txt
-.json
-*requirements.txt
-node_modules
-/venv
+*__pycache__
+*.txt
+venv
