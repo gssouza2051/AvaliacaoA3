@@ -1,8 +1,12 @@
 name: pipeline
-on: [push, pull_request]
+on: 
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  test:
+  pipeline:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,5 +26,5 @@ jobs:
         run: pip install -r requirements.txt
       - name: Valide Conventional commits
         run: python check-commit.py
-      - name: Execute os testes
-        run: python main.py
+      - name: Execute os testes unitários
+        run: python testes_unitarios.py

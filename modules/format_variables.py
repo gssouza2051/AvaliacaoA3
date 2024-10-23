@@ -3,23 +3,29 @@ from datetime import datetime
 import re
 
 def format_cpf(cpf_entry):
-    cpf = cpf_entry.get().replace('.', '').replace('-', '')  # Remove formatação existente
+    try:
+        cpf = cpf_entry.get().replace('.', '').replace('-', '')  # Remove formatação existente
+    except:
+        cpf = cpf_entry.replace('.', '').replace('-', '')  # Remove formatação existente
     if not cpf.isdigit():
-        print("CPF inválido: somente números são permitidos.")
+        #print("CPF inválido: somente números são permitidos.")
         return False
     cpf = cpf[:11]  # Limita a 11 dígitos
     
-    if len(cpf) > 0:
+    if len(cpf) == 11:
         cpf = f"{cpf[:3]}.{cpf[3:6]}.{cpf[6:9]}-{cpf[9:]}"
-        cpf_entry.delete(0, 'end')
-        cpf_entry.insert(0, cpf)
+        #cpf_entry.delete(0, 'end')
+        #cpf_entry.insert(0, cpf)
     else:
         return False
     return cpf
 
 
 def format_data(data):
-    data = data.get()
+    try:
+        data = data.get()
+    except:
+        pass
     try:
         # Converte a string para um objeto datetime
         data = datetime.strptime(data, '%d/%m/%Y')
@@ -28,13 +34,16 @@ def format_data(data):
         data_formatada = data.strftime('%d/%m/%Y')
         return data_formatada
     
-    except ValueError:
-        print("Formato de data inválido. Use DD/MM/YYYY")
+    except:
+        #print("Formato de data inválido. Use DD/MM/YYYY")
         return False
     
 
 def format_telefone(telefone):
-    telefone = telefone.get()
+    try:
+        telefone = telefone.get()
+    except:
+        pass
     #Formata um número de telefone no formato (DDD) XXXXX-XXXX.
 
     # Remove todos os caracteres não numéricos
@@ -42,7 +51,7 @@ def format_telefone(telefone):
 
     # Verifica se o número tem pelo menos 10 dígitos
     if len(telefone) < 10:
-        print('Número de telefone inválido.')
+        #print('Número de telefone inválido.')
         return False
 
     # Formata o número
@@ -53,20 +62,26 @@ def format_telefone(telefone):
 
 
 def valida_email(email):
-    email = email.get()
+    try:
+        email = email.get()
+    except:
+        pass
     # Valida um endereço de e-mail usando uma expressão regular básica.
 
     padrao_email = r'^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     if re.match(padrao_email, email):
-        print('Email válido!')
+        #print('Email válido!')
         return True
     else:
-        print('Email inválido!')
+        #print('Email inválido!')
         return False
 
     
 def valida_senha(senha):
-    senha = senha.get()
+    try:
+        senha = senha.get()
+    except:
+        pass
     #Valida uma senha com base em critérios específicos.
 
     # Padrões para verificar a presença de:
