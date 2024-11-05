@@ -266,24 +266,34 @@ def janela_principal(cpf_valor):
     
     # Botões
     image_path = r".\midia/saúde.png"
-    image = ctk.CTkImage(light_image= Image.open(image_path), size=(200,200))  # Redimensionar a imagem para o tamanho da janela
+    image = ctk.CTkImage(light_image= Image.open(image_path), size=(150,150))  # Redimensionar a imagem para o tamanho da janela
     image_label = ctk.CTkButton(janela_principal, image=image, text='Acompanhe seu histórico de atendimentos', command=lambda: [janela_principal.withdraw(), janela_historico_atendimentos(cpf_valor)], compound='top', fg_color='#03dffc', text_color='black', width=260)
     image_label.place(x = 350, y =300)
 
+    image_path = r".\midia/hospital.png"
+    image = ctk.CTkImage(light_image= Image.open(image_path), size=(150,150))  # Redimensionar a imagem para o tamanho da janela
+    image_label = ctk.CTkButton(janela_principal, image=image, text='Localize as unidades disponíveis', command=lambda: [janela_principal.withdraw(), janela_localiza_unidades(cpf_valor)], compound='top', fg_color='#03dffc', text_color='black', width=260)
+    image_label.place(x=350, y=530)
+
     image_path = r".\midia/receita.png"
-    image = ctk.CTkImage(light_image= Image.open(image_path), size=(200,200))  # Redimensionar a imagem para o tamanho da janela
+    image = ctk.CTkImage(light_image= Image.open(image_path), size=(150,150))  # Redimensionar a imagem para o tamanho da janela
     image_label = ctk.CTkButton(janela_principal, image=image, text='Verifique suas ultimas receitas aqui', command=lambda: [janela_principal.withdraw(), janela_historico_receitas(cpf_valor)], compound='top', fg_color='#03dffc', text_color='black', width=260)
-    image_label.place(x=350, y=680)
+    image_label.place(x=350, y=780)
 
     image_path = r".\midia/cartao.png"
-    image = ctk.CTkImage(light_image= Image.open(image_path), size=(200,200))  # Redimensionar a imagem para o tamanho da janela
+    image = ctk.CTkImage(light_image= Image.open(image_path), size=(150,150))  # Redimensionar a imagem para o tamanho da janela
     image_label = ctk.CTkButton(janela_principal, image=image, text='Acessar cartão', command=lambda: [janela_principal.withdraw(), janela_cartao_paciente(cpf_valor)], compound='top', fg_color='#03dffc', text_color='black', width=260)
     image_label.place(x=750, y=300)
 
+    image_path = r".\midia/medicamento.png"
+    image = ctk.CTkImage(light_image= Image.open(image_path), size=(150,150))  # Redimensionar a imagem para o tamanho da janela
+    image_label = ctk.CTkButton(janela_principal, image=image, text='Disponibilidade medicamentos', command=lambda: [janela_principal.withdraw(), janela_medicamentos(cpf_valor)], compound='top', fg_color='#03dffc', text_color='black', width=260)
+    image_label.place(x=750, y=530)
+
     image_path = r".\midia/ouvidoria.png"
-    image = ctk.CTkImage(light_image= Image.open(image_path), size=(200,200))  # Redimensionar a imagem para o tamanho da janela
+    image = ctk.CTkImage(light_image= Image.open(image_path), size=(150,150))  # Redimensionar a imagem para o tamanho da janela
     image_label = ctk.CTkButton(janela_principal, image=image, text='Ouvidoria - Saúde conectada', command=lambda: [janela_principal.withdraw(), janela_ouvidoria(cpf_valor)], compound='top', fg_color='#03dffc', text_color='black', width=260)
-    image_label.place(x=750, y=680)
+    image_label.place(x=750, y=780)
 
 
     # Botão para enviar os dados
@@ -426,6 +436,105 @@ def janela_historico_atendimentos(cpf_valor):
     botao_voltar = ctk.CTkButton(janela_historico_atendimentos, text="Voltar para página principal", command=lambda: [janela_historico_atendimentos.withdraw(), janela_principal(cpf_valor)], hover_color='green', width=260, text_color='black')
     botao_voltar.place(relx=0, rely=1.0, anchor="sw")
 
+
+def janela_localiza_unidades(cpf_valor):
+
+    # Cria uma nova janela para localizar as unidades médicas disponíveis
+    janela_localiza_unidades = ctk.CTkToplevel()
+    janela_localiza_unidades.config(bg='#161C25')
+    janela_localiza_unidades.geometry('1450x1017')
+    janela_localiza_unidades.resizable(False, False)
+    janela_localiza_unidades.title("Unidades médicas")
+    
+    image_path = r".\midia/template.png"
+    image = ctk.CTkImage(light_image= Image.open(image_path), size=(1450,300))  # Redimensionar a imagem para o tamanho da janela
+    image_label = ctk.CTkLabel(janela_localiza_unidades, image=image, text="")
+    image_label.place(x = 0, y =0)
+
+    button_appearance_mode = ctk.CTkButton(master=janela_localiza_unidades, text="Mudar Tema", command=change_appearance_mode, hover_color='green')
+    button_appearance_mode.pack(pady=5, padx=5)
+    button_appearance_mode.place(relx=1.0, rely=0, x=-5, y=5, anchor="ne")
+
+    # Criar os elementos da interface
+    font1 = ('Arial',20,'bold')
+    font2 = ('Arial',12,'bold')
+
+    id_label = ctk.CTkLabel(janela_localiza_unidades, font=font1,text='ID:',text_color='#fff',bg_color='#161C25')
+    id_label.place(x=20,y=400)
+
+    id_entry = ctk.CTkEntry(janela_localiza_unidades, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
+    id_entry.place(x=100,y=400)
+
+    nome_label = ctk.CTkLabel(janela_localiza_unidades, font=font1,text='Nome:',text_color='#fff',bg_color='#161C25')
+    nome_label.place(x=20,y=480)
+
+    nome_entry = ctk.CTkEntry(janela_localiza_unidades, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
+    nome_entry.place(x=100,y=480)
+
+    cargo_label = ctk.CTkLabel(janela_localiza_unidades, font=font1,text='Cargo:',text_color='#fff',bg_color='#161C25')
+    cargo_label.place(x=20,y=560)
+
+    cargo_entry = ctk.CTkEntry(janela_localiza_unidades, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
+    cargo_entry.place(x=100,y=560)
+
+    genero_label = ctk.CTkLabel(janela_localiza_unidades, font=font1,text='Gênero:',text_color='#fff',bg_color='#161C25')
+    genero_label.place(x=20,y=640)
+
+    options = ['Feminino','Masculino']
+    variable1 = str()
+
+    genero_options = ctk.CTkComboBox(janela_localiza_unidades, font=font1, text_color='#000',fg_color='#fff', dropdown_hover_color='#0C9295', button_color='#0C9295', button_hover_color='#0C9295',border_color='#0C9295',width=180,variable=variable1, values=options, state='readonly')
+    genero_options.set('Male')
+    genero_options.place(x=100,y=640)
+
+    status_label = ctk.CTkLabel(janela_localiza_unidades, font=font1,text='Status:',text_color='#fff',bg_color='#161C25')
+    status_label.place(x=20,y=730)
+
+    status_entry = ctk.CTkEntry(janela_localiza_unidades, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
+    status_entry.place(x=100,y=730)
+
+    adicionar_botao = ctk.CTkButton(janela_localiza_unidades,font=font1,text_color='#fff',text='Adicionar', fg_color='#05A312',hover_color='#00850B',bg_color='#161C25', cursor='hand2',corner_radius=15,width=260)
+    adicionar_botao.place(x=20,y=830)
+
+    limpar_botao = ctk.CTkButton(janela_localiza_unidades,font=font1,text_color='#fff',text='Limpar', fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=260)
+    limpar_botao.place(x=20,y=880)
+
+    atualizar_botao = ctk.CTkButton(janela_localiza_unidades,font=font1,text_color='#fff',text='Atualizar', fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=260)
+    atualizar_botao.place(x=300,y=880)
+
+    deletar_botao = ctk.CTkButton(janela_localiza_unidades,font=font1,text_color='#fff',text='Deletar', fg_color='#E40404',hover_color='#AE0000',bg_color='#161C25',border_color='#E40404',border_width=2,cursor='hand2',corner_radius=15,width=260)
+    deletar_botao.place(x=580,y=880)
+
+    estilo = ttk.Style(janela_localiza_unidades)
+    estilo.theme_use('clam')
+    estilo.configure('Treeview',font=font2,foreground='#fff',background='#000', fieldbackground='#313837')
+    estilo.map('Treeview',background=[('selected', '#1A8F2D')])
+
+    tree =ttk.Treeview(janela_localiza_unidades,height=25)
+
+    tree['columns'] = ('ID', 'Nome', 'Cargo', 'Genero', 'Status')
+
+    tree.column('#0', width=0, stretch=tk.NO)
+    tree.column('ID',anchor=tk.CENTER, width=200)
+    tree.column('Nome',anchor=tk.CENTER, width=220)
+    tree.column('Cargo',anchor=tk.CENTER, width=220)
+    tree.column('Genero',anchor=tk.CENTER, width=220)
+    tree.column('Status',anchor=tk.CENTER, width=220)
+
+    tree.heading('ID', text='ID')
+    tree.heading('Nome', text='Nome')
+    tree.heading('Cargo', text='Cargo')
+    tree.heading('Genero', text='Genero')
+    tree.heading('Status', text='Status')
+
+    tree.place(x=350,y=320)
+
+    
+    # Botão para enviar os dados
+    botao_voltar = ctk.CTkButton(janela_localiza_unidades, text="Voltar para página principal", command=lambda: [janela_localiza_unidades.withdraw(), janela_principal(cpf_valor)], hover_color='green', width=260, text_color='black')
+    botao_voltar.place(relx=0, rely=1.0, anchor="sw")
+
+
 def janela_historico_receitas(cpf_valor):
 
     # Cria uma nova janela para localizar o historico de receitas do paciente
@@ -448,73 +557,52 @@ def janela_historico_receitas(cpf_valor):
     # Criar os elementos da interface
     font1 = ('Arial',20,'bold')
     font2 = ('Arial',12,'bold')
-    font3 = ('Arial',17,'bold')
 
-    nome_label = ctk.CTkLabel(janela_historico_receitas, font=font3,text='Paciente:',text_color='#fff',bg_color='#161C25')
-    nome_label.place(x=20,y=320)
+    id_label = ctk.CTkLabel(janela_historico_receitas, font=font1,text='ID:',text_color='#fff',bg_color='#161C25')
+    id_label.place(x=20,y=400)
+
+    id_entry = ctk.CTkEntry(janela_historico_receitas, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
+    id_entry.place(x=100,y=400)
+
+    nome_label = ctk.CTkLabel(janela_historico_receitas, font=font1,text='Nome:',text_color='#fff',bg_color='#161C25')
+    nome_label.place(x=20,y=480)
 
     nome_entry = ctk.CTkEntry(janela_historico_receitas, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
-    nome_entry.place(x=100,y=320)
+    nome_entry.place(x=100,y=480)
 
-    medicamento_label = ctk.CTkLabel(janela_historico_receitas, font=font3,text='Medi\ncamento:',text_color='#fff',bg_color='#161C25')
-    medicamento_label.place(x=20,y=400)
+    cargo_label = ctk.CTkLabel(janela_historico_receitas, font=font1,text='Cargo:',text_color='#fff',bg_color='#161C25')
+    cargo_label.place(x=20,y=560)
 
-    medicamento_entry = ctk.CTkEntry(janela_historico_receitas, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
-    medicamento_entry.place(x=100,y=400)
+    cargo_entry = ctk.CTkEntry(janela_historico_receitas, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
+    cargo_entry.place(x=100,y=560)
 
-    atestado_label = ctk.CTkLabel(janela_historico_receitas, font=font3,text='Ates\ntado:',text_color='#fff',bg_color='#161C25')
-    atestado_label.place(x=20,y=480)
+    genero_label = ctk.CTkLabel(janela_historico_receitas, font=font1,text='Gênero:',text_color='#fff',bg_color='#161C25')
+    genero_label.place(x=20,y=640)
 
-    atestado_entry = ctk.CTkEntry(janela_historico_receitas, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
-    atestado_entry.place(x=100,y=480)
+    options = ['Feminino','Masculino']
+    variable1 = str()
 
+    genero_options = ctk.CTkComboBox(janela_historico_receitas, font=font1, text_color='#000',fg_color='#fff', dropdown_hover_color='#0C9295', button_color='#0C9295', button_hover_color='#0C9295',border_color='#0C9295',width=180,variable=variable1, values=options, state='readonly')
+    genero_options.set('Male')
+    genero_options.place(x=100,y=640)
 
-    data_consulta_label = ctk.CTkLabel(janela_historico_receitas, font=font3,text='Data da\nConsulta:',text_color='#fff',bg_color='#161C25')
-    data_consulta_label.place(x=20,y=560)
+    status_label = ctk.CTkLabel(janela_historico_receitas, font=font1,text='Status:',text_color='#fff',bg_color='#161C25')
+    status_label.place(x=20,y=730)
 
-    data_consulta_entry = ctk.CTkEntry(janela_historico_receitas, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
-    data_consulta_entry.place(x=100,y=560)
+    status_entry = ctk.CTkEntry(janela_historico_receitas, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
+    status_entry.place(x=100,y=730)
 
-    horario_label = ctk.CTkLabel(janela_historico_receitas, font=font1,text='Horário:',text_color='#fff',bg_color='#161C25')
-    horario_label.place(x=20,y=640)
+    adicionar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Adicionar', fg_color='#05A312',hover_color='#00850B',bg_color='#161C25', cursor='hand2',corner_radius=15,width=260)
+    adicionar_botao.place(x=20,y=830)
 
-    options_horario = ['08:00:00','09:00:00','10:00:00','11:00:00','13:00:00','14:00:00','15:00:00','16:00:00','17:00:00']
-    variable_horario = str()
+    pesquisar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Pesquisar', command=lambda: [db.pesquisar_receitas(tree)], fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=260)
+    pesquisar_botao.place(x=20,y=880)
 
-    horario_options = ctk.CTkComboBox(janela_historico_receitas, font=font1, text_color='#000',fg_color='#fff', dropdown_hover_color='#0C9295', button_color='#0C9295', button_hover_color='#0C9295',border_color='#0C9295',width=180,variable=variable_horario, values=options_horario, state='readonly')
-    horario_options.set('')
-    horario_options.place(x=100,y=640)
+    atualizar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Atualizar', fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=260)
+    atualizar_botao.place(x=300,y=880)
 
-    descricao_label = ctk.CTkLabel(janela_historico_receitas, font=font1,text='Des\ncrição:',text_color='#fff',bg_color='#161C25')
-    descricao_label.place(x=20,y=730)
-
-    descricao_entry = ctk.CTkEntry(janela_historico_receitas, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
-    descricao_entry.place(x=100,y=730)
-
-    medico_label = ctk.CTkLabel(janela_historico_receitas, font=font1,text='Médico:',text_color='#fff',bg_color='#161C25')
-    medico_label.place(x=20,y=840)
-
-    options_medico = ['Jurandir Rosa','Natã Silva','Riquelme Queiroz','Roberto Passos']
-    variable_medico = str()
-
-    medico_options = ctk.CTkComboBox(janela_historico_receitas, font=font1, text_color='#000',fg_color='#fff', dropdown_hover_color='#0C9295', button_color='#0C9295', button_hover_color='#0C9295',border_color='#0C9295',width=180,variable=variable_medico, values=options_medico, state='readonly')
-    medico_options.set('')
-    medico_options.place(x=100,y=840)
-
-    adicionar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Adicionar', command=lambda: [db.adicionar_receita(tree, nome_entry.get(), medico_options.get(), data_consulta_entry.get(), horario_options.get(), cpf_valor)], fg_color='#05A312',hover_color='#00850B',bg_color='#161C25', cursor='hand2',corner_radius=15,width=260)
-    adicionar_botao.place(x=300,y=900)
-    
-    pesquisar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Pesquisar', command=lambda: [db.pesquisar_receita(tree, nome_entry.get(), medico_options.get(), data_consulta_entry.get(), horario_options.get(), cpf_valor)], fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=260)
-    pesquisar_botao.place(x=20,y=900)
-
-    atualizar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Atualizar', command=lambda: [db.update_receita(tree, medico_options.get(), atestado_entry.get(), medicamento_entry.get(), descricao_entry.get(), data_consulta_entry.get(), horario_options.get())], fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=260)
-    atualizar_botao.place(x=580,y=900)
-    
-    deletar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Deletar', command=lambda: [db.deletar_receita(tree, cpf_valor)], fg_color='#E40404',hover_color='#AE0000',bg_color='#161C25',border_color='#E40404',border_width=2,cursor='hand2',corner_radius=15,width=260)
-    deletar_botao.place(x=860,y=900)
-
-    limpar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Limpar', command=lambda: [db.limpar_campo(tree)], fg_color='#161C25',hover_color='#AE0000',bg_color='#161C25',border_color='#E40404',border_width=2,cursor='hand2',corner_radius=15,width=260)
-    limpar_botao.place(x=1140,y=900)
+    deletar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Deletar', fg_color='#E40404',hover_color='#AE0000',bg_color='#161C25',border_color='#E40404',border_width=2,cursor='hand2',corner_radius=15,width=260)
+    deletar_botao.place(x=580,y=880)
 
     estilo = ttk.Style(janela_historico_receitas)
     estilo.theme_use('clam')
@@ -523,28 +611,26 @@ def janela_historico_receitas(cpf_valor):
 
     tree =ttk.Treeview(janela_historico_receitas,height=25)
 
-    tree['columns'] = ( 'Paciente', 'Médico', 'Data da consulta', 'Horário', 'Descrição', 'Medicamento', 'Atestado')
+    tree['columns'] = ('ID', 'Nome', 'Cargo', 'Genero', 'Status')
 
     tree.column('#0', width=0, stretch=tk.NO)
-    tree.column('Paciente',anchor=tk.CENTER, width=165)
-    tree.column('Médico',anchor=tk.CENTER, width=165)
-    tree.column('Data da consulta',anchor=tk.CENTER, width=110)
-    tree.column('Horário',anchor=tk.CENTER, width=110)
-    tree.column('Descrição',anchor=tk.CENTER, width=180)
-    tree.column('Medicamento',anchor=tk.CENTER, width=180)
-    tree.column('Atestado',anchor=tk.CENTER, width=170)
+    tree.column('ID',anchor=tk.CENTER, width=200)
+    tree.column('Nome',anchor=tk.CENTER, width=220)
+    tree.column('Cargo',anchor=tk.CENTER, width=220)
+    tree.column('Genero',anchor=tk.CENTER, width=220)
+    tree.column('Status',anchor=tk.CENTER, width=220)
 
-    tree.heading('Paciente', text='Paciente')
-    tree.heading('Médico', text='Médico')
-    tree.heading('Data da consulta', text='Data da consulta')
-    tree.heading('Horário', text='Horário')
-    tree.heading('Descrição', text='Descrição')
-    tree.heading('Medicamento', text='Medicamento')
-    tree.heading('Atestado', text='Atestado')
+    tree.heading('ID', text='ID')
+    tree.heading('Nome', text='Nome')
+    tree.heading('Cargo', text='Cargo')
+    tree.heading('Genero', text='Genero')
+    tree.heading('Status', text='Status')
 
     tree.place(x=350,y=320)
 
 
+
+    
     # Botão para enviar os dados
     botao_voltar = ctk.CTkButton(janela_historico_receitas, text="Voltar para página principal", command=lambda: [janela_historico_receitas.withdraw(), janela_principal(cpf_valor)], hover_color='green', width=260, text_color='black')
     botao_voltar.place(relx=0, rely=1.0, anchor="sw")
@@ -719,6 +805,106 @@ def janela_cartao_paciente(cpf_valor):
     botao_voltar = ctk.CTkButton(janela_cartao_paciente, text="Voltar para página principal", command=lambda: [janela_cartao_paciente.withdraw(), janela_principal(cpf_valor)], hover_color='green', width=260, text_color='black')
     botao_voltar.place(relx=0, rely=1.0, anchor="sw")
 
+
+def janela_medicamentos(cpf_valor):
+
+    # Cria uma nova janela para localizar os medicamentos disponíveis
+    janela_medicamentos = ctk.CTkToplevel()
+    janela_medicamentos.config(bg='#161C25')
+    janela_medicamentos.geometry('1450x1017')
+    janela_medicamentos.resizable(False, False)
+    janela_medicamentos.title("Medicamentos disponíveis")
+    
+    image_path = r".\midia/template.png"
+    image = ctk.CTkImage(light_image= Image.open(image_path), size=(1450,300))  # Redimensionar a imagem para o tamanho da janela
+    image_label = ctk.CTkLabel(janela_medicamentos, image=image, text="")
+    image_label.place(x = 0, y =0)
+
+    button_appearance_mode = ctk.CTkButton(master=janela_medicamentos, text="Mudar Tema", command=change_appearance_mode, hover_color='green')
+    button_appearance_mode.pack(pady=5, padx=5)
+    button_appearance_mode.place(relx=1.0, rely=0, x=-5, y=5, anchor="ne")
+
+
+    # Criar os elementos da interface
+    font1 = ('Arial',20,'bold')
+    font2 = ('Arial',12,'bold')
+
+    id_label = ctk.CTkLabel(janela_medicamentos, font=font1,text='ID:',text_color='#fff',bg_color='#161C25')
+    id_label.place(x=20,y=400)
+
+    id_entry = ctk.CTkEntry(janela_medicamentos, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
+    id_entry.place(x=100,y=400)
+
+    nome_label = ctk.CTkLabel(janela_medicamentos, font=font1,text='Nome:',text_color='#fff',bg_color='#161C25')
+    nome_label.place(x=20,y=480)
+
+    nome_entry = ctk.CTkEntry(janela_medicamentos, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
+    nome_entry.place(x=100,y=480)
+
+    cargo_label = ctk.CTkLabel(janela_medicamentos, font=font1,text='Cargo:',text_color='#fff',bg_color='#161C25')
+    cargo_label.place(x=20,y=560)
+
+    cargo_entry = ctk.CTkEntry(janela_medicamentos, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
+    cargo_entry.place(x=100,y=560)
+
+    genero_label = ctk.CTkLabel(janela_medicamentos, font=font1,text='Gênero:',text_color='#fff',bg_color='#161C25')
+    genero_label.place(x=20,y=640)
+
+    options = ['Feminino','Masculino']
+    variable1 = str()
+
+    genero_options = ctk.CTkComboBox(janela_medicamentos, font=font1, text_color='#000',fg_color='#fff', dropdown_hover_color='#0C9295', button_color='#0C9295', button_hover_color='#0C9295',border_color='#0C9295',width=180,variable=variable1, values=options, state='readonly')
+    genero_options.set('Male')
+    genero_options.place(x=100,y=640)
+
+    status_label = ctk.CTkLabel(janela_medicamentos, font=font1,text='Status:',text_color='#fff',bg_color='#161C25')
+    status_label.place(x=20,y=730)
+
+    status_entry = ctk.CTkEntry(janela_medicamentos, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
+    status_entry.place(x=100,y=730)
+
+    adicionar_botao = ctk.CTkButton(janela_medicamentos,font=font1,text_color='#fff',text='Adicionar', fg_color='#05A312',hover_color='#00850B',bg_color='#161C25', cursor='hand2',corner_radius=15,width=260)
+    adicionar_botao.place(x=20,y=830)
+
+    limpar_botao = ctk.CTkButton(janela_medicamentos,font=font1,text_color='#fff',text='Limpar', fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=260)
+    limpar_botao.place(x=20,y=880)
+
+    atualizar_botao = ctk.CTkButton(janela_medicamentos,font=font1,text_color='#fff',text='Atualizar', fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=260)
+    atualizar_botao.place(x=300,y=880)
+
+    deletar_botao = ctk.CTkButton(janela_medicamentos,font=font1,text_color='#fff',text='Deletar', fg_color='#E40404',hover_color='#AE0000',bg_color='#161C25',border_color='#E40404',border_width=2,cursor='hand2',corner_radius=15,width=260)
+    deletar_botao.place(x=580,y=880)
+
+    estilo = ttk.Style(janela_medicamentos)
+    estilo.theme_use('clam')
+    estilo.configure('Treeview',font=font2,foreground='#fff',background='#000', fieldbackground='#313837')
+    estilo.map('Treeview',background=[('selected', '#1A8F2D')])
+
+    tree =ttk.Treeview(janela_medicamentos,height=25)
+
+    tree['columns'] = ('ID', 'Nome', 'Cargo', 'Genero', 'Status')
+
+    tree.column('#0', width=0, stretch=tk.NO)
+    tree.column('ID',anchor=tk.CENTER, width=200)
+    tree.column('Nome',anchor=tk.CENTER, width=220)
+    tree.column('Cargo',anchor=tk.CENTER, width=220)
+    tree.column('Genero',anchor=tk.CENTER, width=220)
+    tree.column('Status',anchor=tk.CENTER, width=220)
+
+    tree.heading('ID', text='ID')
+    tree.heading('Nome', text='Nome')
+    tree.heading('Cargo', text='Cargo')
+    tree.heading('Genero', text='Genero')
+    tree.heading('Status', text='Status')
+
+    tree.place(x=350,y=320)
+
+
+
+    
+    # Botão para enviar os dados
+    botao_voltar = ctk.CTkButton(janela_medicamentos, text="Voltar para página principal", command=lambda: [janela_medicamentos.withdraw(), janela_principal(cpf_valor)], hover_color='green', width=260, text_color='black')
+    botao_voltar.place(relx=0, rely=1.0, anchor="sw")
 
 def janela_ouvidoria(cpf_valor):
 
