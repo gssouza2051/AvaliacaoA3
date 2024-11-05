@@ -137,13 +137,13 @@ def janela_criar_conta():
                 janela_cadastro.after(2000, label_mensagem.destroy)
                 sleep(1)
                 janela_cadastro.withdraw()
-                janela_login()
+                janela_login(cpf_valor=None)
 
     
     
     #botao_cadastrar = ctk.CTkButton(janela_cadastro, text="Cadastrar", command=lambda: [cadastrar_usuario(janela_cadastro), janela_cadastro.withdraw(), janela_login()], hover_color='green')
     botao_cadastrar = ctk.CTkButton(janela_cadastro, text="Cadastrar",command=lambda: [cadastrar_usuario(janela_cadastro)], hover_color='green')
-    botao_voltar = ctk.CTkButton(janela_cadastro, text="Voltar para página de login", command=lambda: [janela_cadastro.withdraw(), janela_login()], hover_color='green', width=260, text_color='black')
+    botao_voltar = ctk.CTkButton(janela_cadastro, text="Voltar para página de login", command=lambda: [janela_cadastro.withdraw(), janela_login(cpf_valor=None)], hover_color='green', width=260, text_color='black')
     botao_voltar.place(relx=0, rely=1.0, anchor="sw")
 
     # Posicionando os elementos na janela

@@ -27,4 +27,4 @@ jobs:
       - name: Valide Conventional commits
         run: python check-commit.py
       - name: Execute os testes unitários
-        run: python testes_unitarios.py
+        run: python test_unitarios.py
