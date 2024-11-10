@@ -9,11 +9,11 @@ class TestFormatCPF(unittest.TestCase):
 
     @patch('modules.format_variables.format_cpf')
     def test_cpf_valido(self, mock_format_cpf):
-        cpf = '12345678909'
+        cpf = '1234567890'
         mock_format_cpf.return_value = '123.456.789-09'
         
         resultado = format_cpf(cpf)  # Aqui você deve chamar a função que depende de format_cpf
-        #self.assertEqual(resultado, '123.456.789-09')
+        self.assertEqual(resultado, '123.456.789-09')
         mock_format_cpf.AssertEqual(resultado,mock_format_cpf.return_value)
 
 
@@ -82,7 +82,7 @@ class TestFormatData(unittest.TestCase):
     @patch('modules.format_variables.format_data')
     def test_data_invalida_formato(self,mock_format_data):
         data = '2023-12-31'
-        mock_format_data.return_value = True
+        mock_format_data.return_value = False
 
         resultado = format_data(data)
         #self.assertFalse(resultado)
