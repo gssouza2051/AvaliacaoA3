@@ -9,11 +9,11 @@ class TestFormatCPF(unittest.TestCase):
 
     @patch('modules.format_variables.format_cpf')
     def test_cpf_valido(self, mock_format_cpf):
-        cpf = '1234567890'
+        cpf = '12345678909'
         mock_format_cpf.return_value = '123.456.789-09'
         
         resultado = format_cpf(cpf)  # Aqui você deve chamar a função que depende de format_cpf
-        self.assertEqual(resultado, '123.456.789-09')
+        self.assertEqual(resultado, mock_format_cpf.return_value)
         mock_format_cpf.AssertEqual(resultado,mock_format_cpf.return_value)
 
 
@@ -23,7 +23,7 @@ class TestFormatCPF(unittest.TestCase):
         mock_format_cpf.return_value = False
         
         resultado = format_cpf(cpf)  # Aqui você deve chamar a função que depende de format_cpf
-        #self.assertFalse(resultado)
+        self.assertFalse(resultado)
         mock_format_cpf.AssertEqual(resultado,mock_format_cpf.return_value)
 
 
@@ -33,7 +33,7 @@ class TestFormatCPF(unittest.TestCase):
         mock_format_cpf.return_value = '123.456.789-09'
         
         resultado = format_cpf(cpf)
-        #self.assertEqual(resultado, '123.456.789-09')
+        self.assertEqual(resultado, mock_format_cpf.return_value)
         mock_format_cpf.AssertEqual(resultado,mock_format_cpf.return_value)
 
 
@@ -43,7 +43,7 @@ class TestFormatCPF(unittest.TestCase):
         mock_format_cpf.return_value = False
         
         resultado = format_cpf(cpf)
-        #self.assertFalse(resultado)
+        self.assertFalse(resultado)
         mock_format_cpf.AssertEqual(resultado,mock_format_cpf.return_value)
 
 
@@ -53,6 +53,7 @@ class TestFormatCPF(unittest.TestCase):
         mock_format_cpf.return_value = '123.456.789-09'
         
         resultado = format_cpf(cpf)
+        self.assertEqual(resultado, mock_format_cpf.return_value)
         mock_format_cpf.AssertEqual(resultado,mock_format_cpf.return_value)
 
 
@@ -62,7 +63,7 @@ class TestFormatCPF(unittest.TestCase):
         mock_format_cpf.return_value = '123.456.789-09'
         
         resultado = format_cpf(cpf)
-        #self.assertEqual(resultado, '123.456.789-09')
+        self.assertEqual(resultado, mock_format_cpf.return_value)
         mock_format_cpf.AssertEqual(resultado,mock_format_cpf.return_value)
 
 
@@ -85,7 +86,7 @@ class TestFormatData(unittest.TestCase):
         mock_format_data.return_value = False
 
         resultado = format_data(data)
-        #self.assertFalse(resultado)
+        self.assertEqual(resultado, mock_format_data.return_value)
         mock_format_data.AssertEqual(resultado,mock_format_data.return_value)
 
     @patch('modules.format_variables.format_data')
@@ -94,7 +95,7 @@ class TestFormatData(unittest.TestCase):
         mock_format_data.return_value = False
 
         resultado = format_data(data)
-        #self.assertFalse(resultado)
+        self.assertEqual(resultado, mock_format_data.return_value)
         mock_format_data.AssertEqual(resultado,mock_format_data.return_value)
 
     @patch('modules.format_variables.format_data')
@@ -103,7 +104,7 @@ class TestFormatData(unittest.TestCase):
         mock_format_data.return_value = False
 
         resultado = format_data(data)
-        #self.assertFalse(resultado)
+        self.assertEqual(resultado, mock_format_data.return_value)
         mock_format_data.AssertEqual(resultado,mock_format_data.return_value)
 
     @patch('modules.format_variables.format_data')
@@ -112,7 +113,7 @@ class TestFormatData(unittest.TestCase):
         mock_format_data.return_value = False
 
         resultado = format_data(data)
-        #self.assertFalse(resultado)
+        self.assertEqual(resultado, mock_format_data.return_value)
         mock_format_data.AssertEqual(resultado,mock_format_data.return_value)
 
 
@@ -127,7 +128,7 @@ class TestFormatTelefone(unittest.TestCase):
         mock_format_telefone.return_value = '(11) 98765-4321'
 
         resultado = format_telefone(telefone)
-        #self.assertEqual(resultado, '(11) 98765-4321')
+        self.assertEqual(resultado, mock_format_telefone.return_value)
         mock_format_telefone.AssertEqual(resultado,mock_format_telefone.return_value)
 
     @patch('modules.format_variables.format_telefone')
@@ -136,7 +137,7 @@ class TestFormatTelefone(unittest.TestCase):
         mock_format_telefone.return_value = '(91) 19876-54321'
 
         resultado = format_telefone(telefone)
-        #self.assertEqual(resultado, '(91) 19876-54321')
+        self.assertEqual(resultado, mock_format_telefone.return_value)
         mock_format_telefone.AssertEqual(resultado,mock_format_telefone.return_value)
 
     @patch('modules.format_variables.format_telefone')
@@ -145,7 +146,7 @@ class TestFormatTelefone(unittest.TestCase):
         mock_format_telefone.return_value = '(11) 98765-4321'
 
         resultado = format_telefone(telefone)
-        #self.assertEqual(resultado, '(11) 98765-4321')
+        self.assertEqual(resultado, mock_format_telefone.return_value)
         mock_format_telefone.AssertEqual(resultado,mock_format_telefone.return_value)
 
     @patch('modules.format_variables.format_telefone')
@@ -154,7 +155,7 @@ class TestFormatTelefone(unittest.TestCase):
         mock_format_telefone.return_value = False
 
         resultado = format_telefone(telefone)
-        #self.assertFalse(resultado)
+        self.assertEqual(resultado, mock_format_telefone.return_value)
         mock_format_telefone.AssertEqual(resultado,mock_format_telefone.return_value)
 
     @patch('modules.format_variables.format_telefone')
@@ -163,7 +164,7 @@ class TestFormatTelefone(unittest.TestCase):
         mock_format_telefone.return_value = '(11) 98765-4321'
 
         resultado = format_telefone(telefone)
-        #self.assertEqual(resultado, '(11) 98765-4321')
+        self.assertEqual(resultado, mock_format_telefone.return_value)
         mock_format_telefone.AssertEqual(resultado,mock_format_telefone.return_value)
 
 

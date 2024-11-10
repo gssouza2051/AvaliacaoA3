@@ -26,6 +26,7 @@ class TestBotaoLogin(unittest.TestCase):
         resultado = resultado.to_string(index=False)
 
         assert resultado == mock_query.return_value
+        
 
 class TestBotaoCadastro(unittest.TestCase):
 
