@@ -82,7 +82,7 @@ class TestFormatData(unittest.TestCase):
     @patch('modules.format_variables.format_data')
     def test_data_invalida_formato(self,mock_format_data):
         data = '2023-12-31'
-        mock_format_data.return_value = False
+        mock_format_data.return_value = True
 
         resultado = format_data(data)
         #self.assertFalse(resultado)
