@@ -6,6 +6,7 @@ import psycopg2
 import tkinter as tk
 from modules import format_variables as format
 import datetime
+import openpyxl
 
 def conecta_db():
     # Criando a string de conexão
@@ -156,12 +157,15 @@ def pesquisar_atendimentos(tree, nome_entry, medico_options, data_consulta_entry
         try:
             base = read(query,engine)
             base = pd.DataFrame(base)
+            if base.empty:
+                messagebox.showerror('Sem atendimentos',message='Procuramos pelos seus filtros e não foi encontrado nenhum atendimento!')
             base = base.values.tolist()
 
             for linha in base:
                 tree.insert("", tk.END, values=linha)
             return base
         except:
+            
             return []
 
 
@@ -226,6 +230,8 @@ def pesquisar_receita(tree, nome_entry, medico_options, data_consulta_entry, hor
         try:
             base = read(query,engine)
             base = pd.DataFrame(base)
+            if base.empty:
+                messagebox.showerror('Sem receita',message='Procuramos pelos seus filtros e não foi encontrado nenhuma receita!')
             base = base.values.tolist()
             for linha in base:
                 tree.insert("", tk.END, values=linha)
@@ -246,7 +252,6 @@ def update_atendimentos(tree, medico_entry, plano_entry, status_entry, data_cons
             #clear()
             print('\n')
             print(f'medico:{medico_entry}')
-            print(f'plano:{plano_entry}')
             print(f'status:{status_entry}')
             print(f'Data:{data_consulta_entry}')
             print(f'horario:{horario_entry}')
@@ -387,6 +392,7 @@ def deletar_receita(tree, cpf_valor):
 
 
 def adicionar_receita(tree, nome_entry, medico_options, data_consulta_entry, horario_options, cpf_valor):
+
     engine = conecta_db()
 
     data_consulta_entry = format.format_data(data_consulta_entry)
@@ -427,3 +433,61 @@ def adicionar_receita(tree, nome_entry, medico_options, data_consulta_entry, hor
                     messagebox.showinfo('Sucesso!!',message='Receita cadastrada com sucesso')
                 else:
                     messagebox.showerror('Erro!!',message='Receita ja existe!!')
+
+
+###### CASO PRECISE DAS BASES
+
+def query_tbl_atestados():
+    query = f'''SELECT * FROM saude.tbl_atestados '''
+    conn = conecta_db()
+    base = read(query,conn)
+    print('\n')
+    print(f'base atestados:\n{base}')
+    base.to_excel(r'C:\Users\biel_\OneDrive\Documentos/tbl_atestados.xlsx', index=False)
+    return base
+
+def query_tbl_consultas():
+    query = f'''SELECT * FROM saude.tbl_consultas '''
+    conn = conecta_db()
+    base = read(query,conn)
+    print('\n')
+    print(f'base consultas:\n{base}')
+    base.to_excel(r'C:\Users\biel_\OneDrive\Documentos/tbl_consultas.xlsx')
+    return base
+
+def query_tbl_medicos():
+    query = f'''SELECT * FROM saude.tbl_medicos '''
+    conn = conecta_db()
+    base = read(query,conn)
+    print('\n')
+    print(f'base medicos:\n{base}')
+    base.to_excel(r'C:\Users\biel_\OneDrive\Documentos/tbl_medicos.xlsx')
+    return base
+
+def query_tbl_pacientes():
+    query = f'''SELECT * FROM saude.tbl_pacientes '''
+    conn = conecta_db()
+    base = read(query,conn)
+    print('\n')
+    print(f'base pacientes:\n{base}')
+    base.to_excel(r'C:\Users\biel_\OneDrive\Documentos/tbl_pacientes.xlsx')
+    return base
+
+def query_tbl_receitas():
+    query = f'''SELECT * FROM saude.tbl_receitas '''
+    conn = conecta_db()
+    base = read(query,conn)
+    print('\n')
+    print(f'base receitas:\n{base}')
+    base.to_excel(r'C:\Users\biel_\OneDrive\Documentos/tbl_receitas.xlsx')
+    return base
+
+def query_tbl_usuarios():
+    query = f'''SELECT * FROM saude.tbl_usuarios '''
+    conn = conecta_db()
+    base = read(query,conn)
+    print('\n')
+    print(f'base usuarios:\n{base}')
+    base.to_excel(r'C:\Users\biel_\OneDrive\Documentos/tbl_usuarios.xlsx')
+    return base
+

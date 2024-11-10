@@ -1,54 +1,214 @@
 import pytest
 import psycopg2
-from modules import db
+from unittest.mock import patch
+import unittest
+from modules.db import *
 
-@pytest.fixture(scope='module')
-def db_connection():
-    # Conexão com o banco de dados de teste
-    conn = psycopg2.connect(
-        dbname='test_db',
-        user='seu_usuario',
-        password='sua_senha',
-        host='localhost'
-    )
-    yield conn
-    conn.close()
+'''
+Em Python, a biblioteca unittest.mock é excelente para criar objetos de mock, simulando comportamentos de funções e métodos que interagem com o banco de dados.
+A função mock.patch() permite substituir dependências externas (como chamadas de banco de dados) por versões de mock dentro de um contexto específico.
+'''
 
-@pytest.fixture(scope='module')
-def setup_database(db_connection):
-    cursor = db_connection.cursor()
-    # Criação de uma tabela de teste
-    cursor.execute('''
-        CREATE TABLE test_table (
-            id SERIAL PRIMARY KEY,
-            name VARCHAR(100)
-        )
-    ''')
-    db_connection.commit()
-    yield
-    # Limpeza após os testes
-    cursor.execute('DROP TABLE test_table')
-    db_connection.commit()
-    cursor.close()
+class TestBotaoLogin(unittest.TestCase):
 
-@pytest.fixture(scope='module')
-def test_insert_data():
-    cursor = db.connect()
-    engine = db.conecta_db()
-    #cursor.execute("INSERT INTO test_table (name) VALUES ('Teste')")
-    #db_connection.commit()
+    print('############### TESTES DE INTEGRAÇÃO - Botão de Login ############################')
 
-    resultado_db = db.read("SELECT * FROM saude.tbl_usuarios", engine)
-    #print(f'resultado :{resultado_db}')
-    print(len(resultado_db))
-    
-    #assert len(resultado_db) == 10
-    #assert rows[0][1] == 'Teste'
+    @patch('modules.db.pagina_login')
+    def test_botão_login(self,mock_query):
+        # Defina a resposta que você espera do banco de dados
+        cpf = '858.816.885-51'
+        senha = 'Gabigol123.'
+        mock_query = pd.DataFrame([{'cpf': cpf, 'senha': senha}])
+        mock_query.return_value = mock_query.to_string(index=False)
+        
+        resultado = pagina_login(cpf,senha)
+        resultado = resultado[['cpf','senha']]
+        resultado = resultado.to_string(index=False)
 
-    cursor.close()
+        assert resultado == mock_query.return_value
 
-def test_example_1(test_insert_data):
-    assert test_insert_data["key"] == "value"
+class TestBotaoCadastro(unittest.TestCase):
+
+    print('############### TESTES DE INTEGRAÇÃO - Botão de cadastro ############################')
+
+    @patch('modules.db.pagina_login')
+    def test_botão_login(self,mock_query):
+        # Defina a resposta que você espera do banco de dados
+        cpf = '858.816.885-51'
+        senha = 'Gabigol123.'
+        mock_query = pd.DataFrame([{'cpf': cpf, 'senha': senha}])
+        mock_query.return_value = mock_query.to_string(index=False)
+        
+        resultado = pagina_login(cpf,senha)
+        resultado = resultado[['cpf','senha']]
+        resultado = resultado.to_string(index=False)
+
+        assert resultado == mock_query.return_value
+
+class TestBotaoAdicionar(unittest.TestCase):
+
+    print('############### TESTES DE INTEGRAÇÃO - Botão de Adicionar ############################')
+
+    @patch('modules.db.pagina_login')
+    def test_botão_login(self,mock_query):
+        # Defina a resposta que você espera do banco de dados
+        cpf = '858.816.885-51'
+        senha = 'Gabigol123.'
+        mock_query = pd.DataFrame([{'cpf': cpf, 'senha': senha}])
+        mock_query.return_value = mock_query.to_string(index=False)
+        
+        resultado = pagina_login(cpf,senha)
+        resultado = resultado[['cpf','senha']]
+        resultado = resultado.to_string(index=False)
+
+        assert resultado == mock_query.return_value
+
+class TestBotaoPesquisar(unittest.TestCase):
+
+    print('############### TESTES DE INTEGRAÇÃO - Botão de Pesquisar ############################')
+
+    @patch('modules.db.pagina_login')
+    def test_botão_login(self,mock_query):
+        # Defina a resposta que você espera do banco de dados
+        cpf = '858.816.885-51'
+        senha = 'Gabigol123.'
+        mock_query = pd.DataFrame([{'cpf': cpf, 'senha': senha}])
+        mock_query.return_value = mock_query.to_string(index=False)
+        
+        resultado = pagina_login(cpf,senha)
+        resultado = resultado[['cpf','senha']]
+        resultado = resultado.to_string(index=False)
+
+        assert resultado == mock_query.return_value
+
+class TestBotaoAtualizar(unittest.TestCase):
+
+    print('############### TESTES DE INTEGRAÇÃO - Botão de Atualizar ############################')
+
+    @patch('modules.db.pagina_login')
+    def test_botão_login(self,mock_query):
+        # Defina a resposta que você espera do banco de dados
+        cpf = '858.816.885-51'
+        senha = 'Gabigol123.'
+        mock_query = pd.DataFrame([{'cpf': cpf, 'senha': senha}])
+        mock_query.return_value = mock_query.to_string(index=False)
+        
+        resultado = pagina_login(cpf,senha)
+        resultado = resultado[['cpf','senha']]
+        resultado = resultado.to_string(index=False)
+
+        assert resultado == mock_query.return_value
+
+class TestBotaoDeletar(unittest.TestCase):
+
+    print('############### TESTES DE INTEGRAÇÃO - Botão de Deletar ############################')
+
+    @patch('modules.db.pagina_login')
+    def test_botão_login(self,mock_query):
+        # Defina a resposta que você espera do banco de dados
+        cpf = '858.816.885-51'
+        senha = 'Gabigol123.'
+        mock_query = pd.DataFrame([{'cpf': cpf, 'senha': senha}])
+        mock_query.return_value = mock_query.to_string(index=False)
+        
+        resultado = pagina_login(cpf,senha)
+        resultado = resultado[['cpf','senha']]
+        resultado = resultado.to_string(index=False)
+
+        assert resultado == mock_query.return_value
+
+class TestBotaoLimpar(unittest.TestCase):
+
+    print('############### TESTES DE INTEGRAÇÃO - Botão de Limpar ############################')
+
+    @patch('modules.db.pagina_login')
+    def test_botão_login(self,mock_query):
+        # Defina a resposta que você espera do banco de dados
+        cpf = '858.816.885-51'
+        senha = 'Gabigol123.'
+        mock_query = pd.DataFrame([{'cpf': cpf, 'senha': senha}])
+        mock_query.return_value = mock_query.to_string(index=False)
+        
+        resultado = pagina_login(cpf,senha)
+        resultado = resultado[['cpf','senha']]
+        resultado = resultado.to_string(index=False)
+
+        assert resultado == mock_query.return_value
+
+class TestBotaoFiltroHistoricoAtendimentos(unittest.TestCase):
+
+    print('############### TESTES DE INTEGRAÇÃO - Botão de filtrar Histórico de Atendimentos ############################')
+
+    @patch('modules.db.pagina_login')
+    def test_botão_login(self,mock_query):
+        # Defina a resposta que você espera do banco de dados
+        cpf = '858.816.885-51'
+        senha = 'Gabigol123.'
+        mock_query = pd.DataFrame([{'cpf': cpf, 'senha': senha}])
+        mock_query.return_value = mock_query.to_string(index=False)
+        
+        resultado = pagina_login(cpf,senha)
+        resultado = resultado[['cpf','senha']]
+        resultado = resultado.to_string(index=False)
+
+        assert resultado == mock_query.return_value
+
+class TestBotaoFiltroHistoricoReceitas(unittest.TestCase):
+
+    print('############### TESTES DE INTEGRAÇÃO - Botão de filtrar Histórico de Receitas ############################')
+
+    @patch('modules.db.pagina_login')
+    def test_botão_login(self,mock_query):
+        # Defina a resposta que você espera do banco de dados
+        cpf = '858.816.885-51'
+        senha = 'Gabigol123.'
+        mock_query = pd.DataFrame([{'cpf': cpf, 'senha': senha}])
+        mock_query.return_value = mock_query.to_string(index=False)
+        
+        resultado = pagina_login(cpf,senha)
+        resultado = resultado[['cpf','senha']]
+        resultado = resultado.to_string(index=False)
+
+        assert resultado == mock_query.return_value
+
+class TestBotaoAtualizarCartao(unittest.TestCase):
+
+    print('############### TESTES DE INTEGRAÇÃO - Botão de Atualizar cartão ############################')
+
+    @patch('modules.db.pagina_login')
+    def test_botão_login(self,mock_query):
+        # Defina a resposta que você espera do banco de dados
+        cpf = '858.816.885-51'
+        senha = 'Gabigol123.'
+        mock_query = pd.DataFrame([{'cpf': cpf, 'senha': senha}])
+        mock_query.return_value = mock_query.to_string(index=False)
+        
+        resultado = pagina_login(cpf,senha)
+        resultado = resultado[['cpf','senha']]
+        resultado = resultado.to_string(index=False)
+
+        assert resultado == mock_query.return_value
+
+class TestBotaoPermissao(unittest.TestCase):
+
+    print('############### TESTES DE INTEGRAÇÃO - Permissões  ############################')
+
+    @patch('modules.db.pagina_login')
+    def test_botão_login(self,mock_query):
+        # Defina a resposta que você espera do banco de dados
+        cpf = '858.816.885-51'
+        senha = 'Gabigol123.'
+        mock_query = pd.DataFrame([{'cpf': cpf, 'senha': senha}])
+        mock_query.return_value = mock_query.to_string(index=False)
+        
+        resultado = pagina_login(cpf,senha)
+        resultado = resultado[['cpf','senha']]
+        resultado = resultado.to_string(index=False)
+
+        assert resultado == mock_query.return_value
+
 
 if __name__ == '__main__':
-    test_insert_data()
+    unittest.main()
+
+    

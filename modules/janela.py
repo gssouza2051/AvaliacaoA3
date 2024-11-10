@@ -56,7 +56,6 @@ def janela_criar_conta():
     email_entry = ctk.CTkEntry(janela_cadastro, placeholder_text='seu_email@exemplo.com',width=160)
     cpf_label = ctk.CTkLabel(janela_cadastro, text="CPF:", text_color='black')
     cpf_entry = ctk.CTkEntry(janela_cadastro, placeholder_text="___.___.___-__")
-    #cpf_entry.bind("<KeyRelease>", format.format_cpf(cpf_entry))  # Associa a função ao evento de soltar a tecla
     telefone_label = ctk.CTkLabel(janela_cadastro, text="Telefone:", text_color='black')
     telefone_entry = ctk.CTkEntry(janela_cadastro, placeholder_text="(___) _____-____")
     data_nascimento_label = ctk.CTkLabel(janela_cadastro, text="Data de Nascimento:", text_color='black')
@@ -72,7 +71,7 @@ def janela_criar_conta():
 
     def cadastrar_usuario(janela_cadastro):
         print('\n')
-        # Aqui você colocaria a lógica para salvar os dados do usuário
+        # Aqui é a lógica para capturar/salvar os dados do usuário
         nome = nome_entry.get()
         print(f'nome :{nome}')
         email = email_entry.get()
@@ -97,11 +96,9 @@ def janela_criar_conta():
             # Exibir uma mensagem de erro se algum campo estiver vazio
             print('Preencha os campos necessários.')
             label_mensagem = ctk.CTkLabel(janela_cadastro, text="Erro!! Por favor, preencha todos os campos.", font=("Arial", 12), bg_color='#fc031c', text_color='black')
-            #label_mensagem.pack(padx=10,pady=10, anchor="w")
             label_mensagem.place(x=480, y=750)
-            # Após 2 segundos, remove a label da tela
+            # Após 2 segundos, remove a mensagem da tela
             janela_cadastro.after(2000, label_mensagem.destroy)
-            #janela_cadastro.withdraw()
         
         elif verifica_email == False or valida_senha == False or data_nascimento == False or telefone == False or cpf == False:
 
@@ -109,9 +106,7 @@ def janela_criar_conta():
             print('Algum campo está fora do padrão necessário')
             label_mensagem = ctk.CTkLabel(janela_cadastro, text="Erro!! Por favor, preencha todos os campos no formato correto", font=("Arial", 12), bg_color='#fc031c', text_color='black')
             label_mensagem.place(x=430, y=750)
-            # Após 2 segundos, remove a label da tela
             janela_cadastro.after(2000, label_mensagem.destroy)
-            #janela_cadastro.withdraw()
             
         else:
             # Botão para enviar os dados
@@ -125,23 +120,18 @@ def janela_criar_conta():
                 print('cpf ja cadastrado!')
                 label_mensagem = ctk.CTkLabel(janela_cadastro, text="Erro!! CPF já cadastrado!", font=("Arial", 12), bg_color='#fc031c', text_color='black')
                 label_mensagem.place(x=530, y=750)
-                # Após 2 segundos, remove a label da tela
                 janela_cadastro.after(2000, label_mensagem.destroy)
-                #janela_cadastro.withdraw()
 
             else:
                 db.cadastro_usuario(nome,email,senha,data_nascimento,telefone,cpf)
                 label_mensagem = ctk.CTkLabel(janela_cadastro, text="Cadastro realizado com sucesso!!", font=("Arial", 12), bg_color='#61eb34', text_color='black')
                 label_mensagem.place(x=510, y=750)
-                # Após 1 segundo, remove a label da tela
                 janela_cadastro.after(2000, label_mensagem.destroy)
                 sleep(1)
                 janela_cadastro.withdraw()
                 janela_login(cpf_valor=None)
 
     
-    
-    #botao_cadastrar = ctk.CTkButton(janela_cadastro, text="Cadastrar", command=lambda: [cadastrar_usuario(janela_cadastro), janela_cadastro.withdraw(), janela_login()], hover_color='green')
     botao_cadastrar = ctk.CTkButton(janela_cadastro, text="Cadastrar",command=lambda: [cadastrar_usuario(janela_cadastro)], hover_color='green')
     botao_voltar = ctk.CTkButton(janela_cadastro, text="Voltar para página de login", command=lambda: [janela_cadastro.withdraw(), janela_login(cpf_valor=None)], hover_color='green', width=260, text_color='black')
     botao_voltar.place(relx=0, rely=1.0, anchor="sw")
@@ -174,7 +164,6 @@ def login(janela, cpf_valor, senha_valor):
         # Exibir uma mensagem de erro se algum campo estiver vazio
         label_mensagem = ctk.CTkLabel(janela, text="Erro!!! Por favor, preencha todos os campos.", font=("Arial", 12), bg_color='#fc031c', text_color='black')
         label_mensagem.place(x = 50, y = 500)
-        # Após 2 segundos, remove a label da tela
         janela.after(2000, label_mensagem.destroy)
     else:
         # Continuar com a lógica de login
@@ -189,7 +178,6 @@ def login(janela, cpf_valor, senha_valor):
 
             label_mensagem = ctk.CTkLabel(janela, text="Login feito!", font=("Arial", 12), bg_color='#61eb34', text_color='black')
             label_mensagem.pack(padx=10,pady=10, anchor="w")
-            # Após 2 segundos, remove a label da tela
             janela.after(2000, label_mensagem.destroy)
             janela.withdraw()
             janela_principal(cpf_valor)
@@ -197,7 +185,6 @@ def login(janela, cpf_valor, senha_valor):
             # Exibir uma mensagem de erro se login ou senha nao for encontrado
             label_mensagem = ctk.CTkLabel(janela, text="Erro!!! Login ou senha inválidos.", font=("Arial", 12), bg_color='#fc031c', text_color='black')
             label_mensagem.place(x = 50, y = 500)
-            # Após 2 segundos, remove a label da tela
             janela.after(4000, label_mensagem.destroy)
 
         
@@ -319,7 +306,7 @@ def janela_historico_atendimentos(cpf_valor):
     nome_entry = ctk.CTkEntry(janela_historico_atendimentos, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
     nome_entry.place(x=100,y=270)
 
-    options_especialidade = ['Cardiologista','Cirurgião Geral','Dermatologista','Podólogo']
+    options_especialidade = ['Cardiologista','Cirurgião Geral','Dermatologista','Fisioterapeuta','Fonoaudiólogo','Ginecologista','Obstetra','Pediatria','Podólogo']
     variable_especialidade = str()
 
     especialidade_label = ctk.CTkLabel(janela_historico_atendimentos, font=font3,text='Especi\nalidade:',text_color='#fff',bg_color='#161C25')
@@ -371,7 +358,7 @@ def janela_historico_atendimentos(cpf_valor):
     medico_label = ctk.CTkLabel(janela_historico_atendimentos, font=font1,text='Médico:',text_color='#fff',bg_color='#161C25')
     medico_label.place(x=20,y=690)
 
-    options_medico = ['Jurandir Rosa','Natã Silva','Riquelme Queiroz','Roberto Passos']
+    options_medico = ['Ana Clara Souza','Bruno Oliveira Santos','Graciele Almeida Nunes','Heloisa Cardoso Pinto','Jurandir Rosa Martins','Matheus Garcia Lopes','Natã Silva Pinto','Riquelme Queiroz Silva','Roberto Passos Santos']
     variable_medico = str()
 
     medico_options = ctk.CTkComboBox(janela_historico_atendimentos, font=font1, text_color='#000',fg_color='#fff', dropdown_hover_color='#0C9295', button_color='#0C9295', button_hover_color='#0C9295',border_color='#0C9295',width=180,variable=variable_medico, values=options_medico, state='readonly')
@@ -462,7 +449,7 @@ def janela_historico_receitas(cpf_valor):
     medicamento_entry = ctk.CTkEntry(janela_historico_receitas, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
     medicamento_entry.place(x=100,y=340)
 
-    atestado_label = ctk.CTkLabel(janela_historico_receitas, font=font3,text='Ates\ntado:',text_color='#fff',bg_color='#161C25')
+    atestado_label = ctk.CTkLabel(janela_historico_receitas, font=font3,text='Atestado:',text_color='#fff',bg_color='#161C25')
     atestado_label.place(x=20,y=410)
 
     atestado_entry = ctk.CTkEntry(janela_historico_receitas, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
@@ -485,7 +472,7 @@ def janela_historico_receitas(cpf_valor):
     horario_options.set('')
     horario_options.place(x=100,y=550)
 
-    descricao_label = ctk.CTkLabel(janela_historico_receitas, font=font1,text='Des\ncrição:',text_color='#fff',bg_color='#161C25')
+    descricao_label = ctk.CTkLabel(janela_historico_receitas, font=font3,text='Descrição:',text_color='#fff',bg_color='#161C25')
     descricao_label.place(x=20,y=620)
 
     descricao_entry = ctk.CTkEntry(janela_historico_receitas, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
@@ -494,7 +481,7 @@ def janela_historico_receitas(cpf_valor):
     medico_label = ctk.CTkLabel(janela_historico_receitas, font=font1,text='Médico:',text_color='#fff',bg_color='#161C25')
     medico_label.place(x=20,y=690)
 
-    options_medico = ['Jurandir Rosa','Natã Silva','Riquelme Queiroz','Roberto Passos']
+    options_medico = ['Ana Clara Souza','Bruno Oliveira Santos','Graciele Almeida Nunes','Heloisa Cardoso Pinto','Jurandir Rosa Martins','Matheus Garcia Lopes','Natã Silva Pinto','Riquelme Queiroz Silva','Roberto Passos Santos']
     variable_medico = str()
 
     medico_options = ctk.CTkComboBox(janela_historico_receitas, font=font1, text_color='#000',fg_color='#fff', dropdown_hover_color='#0C9295', button_color='#0C9295', button_hover_color='#0C9295',border_color='#0C9295',width=180,variable=variable_medico, values=options_medico, state='readonly')
@@ -551,7 +538,7 @@ def janela_historico_receitas(cpf_valor):
 
 def janela_cartao_paciente(cpf_valor):
 
-    # Cria uma nova janela para localizar as unidades médicas disponíveis
+    # Cria uma nova janela para visualizar o cartão do usuário
     janela_cartao_paciente = ctk.CTkToplevel()
     #janela_cartao_paciente.config(bg='#161C25')
     janela_cartao_paciente.geometry('1250x800')
@@ -589,9 +576,6 @@ def janela_cartao_paciente(cpf_valor):
     # Formatando a data no formato desejado
     data_formatada = data_objeto.strftime("%d/%m/%Y")
 
-    #id_label = ctk.CTkLabel(master=janela_cartao_paciente, text=f"ID: {id_usuario}")
-    #id_label.place(x=500, y=460)
-
     nome_label = ctk.CTkLabel(master=janela_cartao_paciente, text=f"Nome: {nome}")
     nome_label.place(x=500, y=430)
 
@@ -614,8 +598,6 @@ def janela_cartao_paciente(cpf_valor):
     cpf_label.place(x=500, y=670)
 
 
-    #### AGORA A PARTE EDITÁVEL
-
     # Criando os campos editáveis
     font2 = ('Arial',12,'bold')
     
@@ -629,7 +611,7 @@ def janela_cartao_paciente(cpf_valor):
     telefone_entry.place(x=800, y=590)
 
 
-    options = ['Equipe Desenvolvimento','Médico','Paciente','Recepcionista']
+    options = ['Enfermeira','Equipe Desenvolvimento','Médico','Paciente','Recepcionista']
     variable1 = str()
 
     perfil_entry = ctk.CTkComboBox(janela_cartao_paciente, font=font2, text_color='#000',fg_color='#fff', dropdown_hover_color='#0C9295', button_color='#0C9295', button_hover_color='#0C9295',border_color='#0C9295',width=180,variable=variable1, values=options, state='readonly')
@@ -639,7 +621,6 @@ def janela_cartao_paciente(cpf_valor):
 
     # Criando um botão para salvar as alterações 
     def salvar_alteracoes():
-        # Lógica para salvar as alterações no banco de dados ou em um arquivo
         novo_email =  email_entry.get()
         nova_senha =  senha_entry.get()
         novo_telefone =  telefone_entry.get()
@@ -648,6 +629,7 @@ def janela_cartao_paciente(cpf_valor):
         verifica_email = format.valida_email(novo_email)
 
         telefone = format.format_telefone(novo_telefone)
+        print('\n')
         print(f'telefone :{telefone}')
 
         valida_senha = format.valida_senha(nova_senha)
@@ -658,27 +640,21 @@ def janela_cartao_paciente(cpf_valor):
             # Exibir uma mensagem de erro se algum campo estiver vazio
             print('Erro!! Por favor, preencha algum campo')
             label_mensagem = ctk.CTkLabel(janela_cartao_paciente, text="Erro!! Por favor, preencha algum campo", font=("Arial", 12), bg_color='#fc031c', text_color='black')
-            #label_mensagem.pack(padx=10,pady=10, anchor="w")
             label_mensagem.place(x=500, y=750)
-            # Após 2 segundos, remove a label da tela
             janela_cartao_paciente.after(2000, label_mensagem.destroy)
-            #janela_cadastro.withdraw()
 
         elif novo_perfil != '':
             if tipo_perfil != 'Equipe Desenvolvimento' and tipo_perfil != 'Recepcionista':
                 # Exibir uma mensagem de erro se algum campo estiver vazio
                 print('Sem permissão necessária para troca')
                 label_mensagem = ctk.CTkLabel(janela_cartao_paciente, text="Erro!! Sem permissão necessária para troca.", font=("Arial", 12), bg_color='#fc031c', text_color='black')
-                #label_mensagem.pack(padx=10,pady=10, anchor="w")
                 label_mensagem.place(x=500, y=750)
-                # Após 2 segundos, remove a label da tela
                 janela_cartao_paciente.after(2000, label_mensagem.destroy)
-                #janela_cadastro.withdraw()
+
             else:
                 db.atualiza_dados_cartao_tipo_perfil(id_usuario,novo_perfil)
                 label_mensagem = ctk.CTkLabel(janela_cartao_paciente, text="Sucesso!! troca realizada", font=("Arial", 12), bg_color='#61eb34', text_color='black')
                 label_mensagem.place(x=500, y=750)
-                # Após 2 segundos, remove a label da tela
                 janela_cartao_paciente.after(2000, label_mensagem.destroy)
         
         elif verifica_email == False or valida_senha == False or  telefone == False:
@@ -687,9 +663,7 @@ def janela_cartao_paciente(cpf_valor):
             print('Algum campo está fora do padrão necessário')
             label_mensagem = ctk.CTkLabel(janela_cartao_paciente, text="Erro!! Por favor, preencha todos os campos no formato correto", font=("Arial", 12), bg_color='#fc031c', text_color='black')
             label_mensagem.place(x=500, y=750)
-            # Após 2 segundos, remove a label da tela
             janela_cartao_paciente.after(2000, label_mensagem.destroy)
-            #janela_cadastro.withdraw()
 
         if verifica_email == True and valida_senha == True and  telefone != False:
             # Botão para enviar os dados
@@ -697,24 +671,17 @@ def janela_cartao_paciente(cpf_valor):
             db.atualiza_dados_cartao(id_usuario,novo_email,nova_senha,novo_telefone)
             label_mensagem = ctk.CTkLabel(janela_cartao_paciente, text="Atualização realizada com sucesso!!", font=("Arial", 12), bg_color='#61eb34', text_color='black')
             label_mensagem.place(x=500, y=750)
-            # Após 1 segundo, remove a label da tela
             janela_cartao_paciente.after(2000, label_mensagem.destroy)
             sleep(1)
-            #janela_cadastro.withdraw()
-            #janela_login()
             
         else:
             pass
             
-
-
             
-
     salvar_botao = ctk.CTkButton(master=janela_cartao_paciente, text="Salvar Alterações", command=salvar_alteracoes)
     salvar_botao.place(x=800, y=700)
 
 
-    
     # Botão para enviar os dados
     botao_voltar = ctk.CTkButton(janela_cartao_paciente, text="Voltar para página principal", command=lambda: [janela_cartao_paciente.withdraw(), janela_principal(cpf_valor)], hover_color='green', width=260, text_color='black')
     botao_voltar.place(relx=0, rely=1.0, anchor="sw")
