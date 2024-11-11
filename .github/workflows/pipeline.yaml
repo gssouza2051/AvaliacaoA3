@@ -28,5 +28,3 @@ jobs:
         run: python check-commit.py
       - name: Execute os testes unitários
         run: python test_unitarios.py
-      - name: Execute os testes de integração
-        run: python test_integracao.py

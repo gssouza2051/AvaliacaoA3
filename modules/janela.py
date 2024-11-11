@@ -94,7 +94,7 @@ def janela_criar_conta():
         if nome == '' or email == '' or  cpf == '' or telefone == '' or data_nascimento == '' or senha == '':
 
             # Exibir uma mensagem de erro se algum campo estiver vazio
-            print('Preencha os campos necessários.')
+            #print('Preencha os campos necessários.')
             label_mensagem = ctk.CTkLabel(janela_cadastro, text="Erro!! Por favor, preencha todos os campos.", font=("Arial", 12), bg_color='#fc031c', text_color='black')
             label_mensagem.place(x=480, y=750)
             # Após 2 segundos, remove a mensagem da tela
@@ -103,7 +103,7 @@ def janela_criar_conta():
         elif verifica_email == False or valida_senha == False or data_nascimento == False or telefone == False or cpf == False:
 
             # Exibir uma mensagem de erro se algum campo estiver fora do padrão necessário
-            print('Algum campo está fora do padrão necessário')
+            #print('Algum campo está fora do padrão necessário')
             label_mensagem = ctk.CTkLabel(janela_cadastro, text="Erro!! Por favor, preencha todos os campos no formato correto", font=("Arial", 12), bg_color='#fc031c', text_color='black')
             label_mensagem.place(x=430, y=750)
             janela_cadastro.after(2000, label_mensagem.destroy)
@@ -114,10 +114,10 @@ def janela_criar_conta():
             
             # Verifica se o cpf ja existe
             verifica_cadastro = db.verifica_cadastro(cpf)
-            print(f'verifica :{verifica_cadastro}')
+            #print(f'verifica :{verifica_cadastro}')
             if not verifica_cadastro.empty:
                 # Exibir uma mensagem de erro se algum campo estiver fora do padrão necessário
-                print('cpf ja cadastrado!')
+                #print('cpf ja cadastrado!')
                 label_mensagem = ctk.CTkLabel(janela_cadastro, text="Erro!! CPF já cadastrado!", font=("Arial", 12), bg_color='#fc031c', text_color='black')
                 label_mensagem.place(x=530, y=750)
                 janela_cadastro.after(2000, label_mensagem.destroy)
@@ -364,17 +364,17 @@ def janela_historico_atendimentos(cpf_valor):
     medico_options = ctk.CTkComboBox(janela_historico_atendimentos, font=font1, text_color='#000',fg_color='#fff', dropdown_hover_color='#0C9295', button_color='#0C9295', button_hover_color='#0C9295',border_color='#0C9295',width=180,variable=variable_medico, values=options_medico, state='readonly')
     medico_options.set('')
     medico_options.place(x=100,y=690)
-
-    adicionar_botao = ctk.CTkButton(janela_historico_atendimentos,font=font1,text_color='#fff',text='Adicionar', command=lambda: [db.adicionar_atendimentos(tree, nome_entry.get(), medico_options.get(), data_consulta_entry.get(), horario_options.get(), plano_saude_options.get(), status_options.get(), especialidade_options.get(), cpf_valor)], fg_color='#05A312',hover_color='#00850B',bg_color='#161C25', cursor='hand2',corner_radius=15,width=180)
+                                                                                                                                                            
+    adicionar_botao = ctk.CTkButton(janela_historico_atendimentos,font=font1,text_color='#fff',text='Adicionar', command=lambda: [db.adicionar_atendimentos(tree, nome_entry.get(), medico_options.get(), data_consulta_entry.get(), horario_options.get(), especialidade_options.get(), cpf_valor)], fg_color='#05A312',hover_color='#00850B',bg_color='#161C25', cursor='hand2',corner_radius=15,width=180)
     adicionar_botao.place(x=300,y=750)
     
     pesquisar_botao = ctk.CTkButton(janela_historico_atendimentos,font=font1,text_color='#fff',text='Pesquisar', command=lambda: [db.pesquisar_atendimentos(tree, nome_entry.get(), medico_options.get(), data_consulta_entry.get(), horario_options.get(), plano_saude_options.get(), status_options.get(), especialidade_options.get(), cpf_valor)], fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=180)
     pesquisar_botao.place(x=500,y=750)
 
-    atualizar_botao = ctk.CTkButton(janela_historico_atendimentos,font=font1,text_color='#fff',text='Atualizar', command=lambda: [db.update_atendimentos(tree, medico_options.get(), plano_saude_options.get(), status_options.get(), data_consulta_entry.get(), horario_options.get())], fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=180)
+    atualizar_botao = ctk.CTkButton(janela_historico_atendimentos,font=font1,text_color='#fff',text='Atualizar', command=lambda: [db.update_atendimentos(tree, cpf_valor, nome_entry.get(), medico_options.get(), status_options.get(), data_consulta_entry.get(), horario_options.get())], fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=180)
     atualizar_botao.place(x=700,y=750)
     
-    deletar_botao = ctk.CTkButton(janela_historico_atendimentos,font=font1,text_color='#fff',text='Deletar', command=lambda: [db.deletar_atendimentos(tree, cpf_valor)], fg_color='#E40404',hover_color='#AE0000',bg_color='#161C25',border_color='#E40404',border_width=2,cursor='hand2',corner_radius=15,width=180)
+    deletar_botao = ctk.CTkButton(janela_historico_atendimentos,font=font1,text_color='#fff',text='Deletar', command=lambda: [db.deletar_atendimentos(tree, cpf_valor, medico_options.get(), data_consulta_entry.get(), horario_options.get(), status_options.get())], fg_color='#E40404',hover_color='#AE0000',bg_color='#161C25',border_color='#E40404',border_width=2,cursor='hand2',corner_radius=15,width=180)
     deletar_botao.place(x=900,y=750)
 
     limpar_botao = ctk.CTkButton(janela_historico_atendimentos,font=font1,text_color='#fff',text='Limpar', command=lambda: [db.limpar_campo(tree)], fg_color='#161C25',hover_color='#AE0000',bg_color='#161C25',border_color='#E40404',border_width=2,cursor='hand2',corner_radius=15,width=180)
@@ -446,15 +446,22 @@ def janela_historico_receitas(cpf_valor):
     medicamento_label = ctk.CTkLabel(janela_historico_receitas, font=font3,text='Medi\ncamento:',text_color='#fff',bg_color='#161C25')
     medicamento_label.place(x=20,y=340)
 
-    medicamento_entry = ctk.CTkEntry(janela_historico_receitas, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
+    options_medicamento = ['Amoxicilina','Cetirizina','Clonazepam','Diazepam','Dipirona','Dorflex','Fluoxetina','Ibuprofeno','Omeprazol','Paracetamol']
+    variable_medicamento = str()
+
+    medicamento_entry = ctk.CTkComboBox(janela_historico_receitas, font=font1, text_color='#000',fg_color='#fff', dropdown_hover_color='#0C9295', button_color='#0C9295', button_hover_color='#0C9295',border_color='#0C9295',width=180,variable=variable_medicamento, values=options_medicamento, state='readonly')
+    medicamento_entry.set('')
     medicamento_entry.place(x=100,y=340)
 
     atestado_label = ctk.CTkLabel(janela_historico_receitas, font=font3,text='Atestado:',text_color='#fff',bg_color='#161C25')
     atestado_label.place(x=20,y=410)
 
-    atestado_entry = ctk.CTkEntry(janela_historico_receitas, font=font1,text_color='#000',fg_color='#fff', border_color='#0C9295', border_width=2, width=180)
-    atestado_entry.place(x=100,y=410)
+    options_atestado = ['1 dia','2 dias','3 dias','4 dias','5 dias','6 dias','7 dias']
+    variable_atestado = str()
 
+    atestado_entry = ctk.CTkComboBox(janela_historico_receitas, font=font1, text_color='#000',fg_color='#fff', dropdown_hover_color='#0C9295', button_color='#0C9295', button_hover_color='#0C9295',border_color='#0C9295',width=180,variable=variable_atestado, values=options_atestado, state='readonly')
+    atestado_entry.set('')
+    atestado_entry.place(x=100,y=410)
 
     data_consulta_label = ctk.CTkLabel(janela_historico_receitas, font=font3,text='Data da\nConsulta:',text_color='#fff',bg_color='#161C25')
     data_consulta_label.place(x=20,y=480)
@@ -488,16 +495,16 @@ def janela_historico_receitas(cpf_valor):
     medico_options.set('')
     medico_options.place(x=100,y=690)
 
-    adicionar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Adicionar', command=lambda: [db.adicionar_receita(tree, nome_entry.get(), medico_options.get(), data_consulta_entry.get(), horario_options.get(), cpf_valor)], fg_color='#05A312',hover_color='#00850B',bg_color='#161C25', cursor='hand2',corner_radius=15,width=180)
+    adicionar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Adicionar', command=lambda: [db.adicionar_receita(tree, nome_entry.get(), medico_options.get(), medicamento_entry.get(), atestado_entry.get(), descricao_entry.get(), data_consulta_entry.get(), horario_options.get(), cpf_valor)], fg_color='#05A312',hover_color='#00850B',bg_color='#161C25', cursor='hand2',corner_radius=15,width=180)
     adicionar_botao.place(x=300,y=750)
     
-    pesquisar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Pesquisar', command=lambda: [db.pesquisar_receita(tree, nome_entry.get(), medico_options.get(), data_consulta_entry.get(), horario_options.get(), cpf_valor)], fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=180)
+    pesquisar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Pesquisar', command=lambda: [db.pesquisar_receita(tree, medico_options.get(), data_consulta_entry.get(), horario_options.get(), cpf_valor)], fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=180)
     pesquisar_botao.place(x=500,y=750)
 
-    atualizar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Atualizar', command=lambda: [db.update_receita(tree, medico_options.get(), atestado_entry.get(), medicamento_entry.get(), descricao_entry.get(), data_consulta_entry.get(), horario_options.get())], fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=180)
+    atualizar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Atualizar', command=lambda: [db.update_receita(tree, cpf_valor, medico_options.get(), atestado_entry.get(), medicamento_entry.get(), descricao_entry.get(), data_consulta_entry.get(), horario_options.get())], fg_color='#161C25',hover_color='#FF5002',bg_color='#161C25',border_color='#F15704',border_width=2,cursor='hand2',corner_radius=15,width=180)
     atualizar_botao.place(x=700,y=750)
     
-    deletar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Deletar', command=lambda: [db.deletar_receita(tree, cpf_valor)], fg_color='#E40404',hover_color='#AE0000',bg_color='#161C25',border_color='#E40404',border_width=2,cursor='hand2',corner_radius=15,width=180)
+    deletar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Deletar', command=lambda: [db.deletar_receita(tree, cpf_valor, medico_options.get(), data_consulta_entry.get(), horario_options.get())], fg_color='#E40404',hover_color='#AE0000',bg_color='#161C25',border_color='#E40404',border_width=2,cursor='hand2',corner_radius=15,width=180)
     deletar_botao.place(x=900,y=750)
 
     limpar_botao = ctk.CTkButton(janela_historico_receitas,font=font1,text_color='#fff',text='Limpar', command=lambda: [db.limpar_campo(tree)], fg_color='#161C25',hover_color='#AE0000',bg_color='#161C25',border_color='#E40404',border_width=2,cursor='hand2',corner_radius=15,width=180)
@@ -630,15 +637,15 @@ def janela_cartao_paciente(cpf_valor):
 
         telefone = format.format_telefone(novo_telefone)
         print('\n')
-        print(f'telefone :{telefone}')
+        #print(f'telefone :{telefone}')
 
         valida_senha = format.valida_senha(nova_senha)
-        print(f'valida senha :{valida_senha}')
+        #print(f'valida senha :{valida_senha}')
 
         if novo_email == '' and nova_senha == '' and  novo_telefone == '' and telefone == '' and novo_perfil == '':
 
             # Exibir uma mensagem de erro se algum campo estiver vazio
-            print('Erro!! Por favor, preencha algum campo')
+            #print('Erro!! Por favor, preencha algum campo')
             label_mensagem = ctk.CTkLabel(janela_cartao_paciente, text="Erro!! Por favor, preencha algum campo", font=("Arial", 12), bg_color='#fc031c', text_color='black')
             label_mensagem.place(x=500, y=750)
             janela_cartao_paciente.after(2000, label_mensagem.destroy)
@@ -646,7 +653,7 @@ def janela_cartao_paciente(cpf_valor):
         elif novo_perfil != '':
             if tipo_perfil != 'Equipe Desenvolvimento' and tipo_perfil != 'Recepcionista':
                 # Exibir uma mensagem de erro se algum campo estiver vazio
-                print('Sem permissão necessária para troca')
+                #print('Sem permissão necessária para troca')
                 label_mensagem = ctk.CTkLabel(janela_cartao_paciente, text="Erro!! Sem permissão necessária para troca.", font=("Arial", 12), bg_color='#fc031c', text_color='black')
                 label_mensagem.place(x=500, y=750)
                 janela_cartao_paciente.after(2000, label_mensagem.destroy)
@@ -660,7 +667,7 @@ def janela_cartao_paciente(cpf_valor):
         elif verifica_email == False or valida_senha == False or  telefone == False:
 
             # Exibir uma mensagem de erro se algum campo estiver fora do padrão necessário
-            print('Algum campo está fora do padrão necessário')
+            #print('Algum campo está fora do padrão necessário')
             label_mensagem = ctk.CTkLabel(janela_cartao_paciente, text="Erro!! Por favor, preencha todos os campos no formato correto", font=("Arial", 12), bg_color='#fc031c', text_color='black')
             label_mensagem.place(x=500, y=750)
             janela_cartao_paciente.after(2000, label_mensagem.destroy)
