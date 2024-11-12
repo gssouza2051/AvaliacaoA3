@@ -74,7 +74,6 @@ def cadastro_usuario(nome,email,senha,dt_nascimento,telefone,cpf):
     INSERT INTO saude.tbl_usuarios (nome, email, senha, dt_nascimento, telefone, tipo_usuario, cpf)
     VALUES ('{nome}', '{email}', '{senha}', '{dt_nascimento}', '{telefone}', 'Paciente', '{cpf}');
     '''
-    #print(query)
     execute(query)
 
 def atualiza_dados_cartao(id_usuario,email,senha,telefone):
@@ -83,7 +82,6 @@ def atualiza_dados_cartao(id_usuario,email,senha,telefone):
     SET email = '{email}', senha = '{senha}',telefone = '{telefone}'
     WHERE id_usuario = {id_usuario};
     '''
-    #print(query)
     valor = execute(query)
     return valor
 
@@ -93,7 +91,6 @@ def atualiza_dados_cartao_tipo_perfil(id_usuario,novo_tipo_usuario):
     SET tipo_usuario = '{novo_tipo_usuario}'
     WHERE id_usuario = {id_usuario} and tipo_usuario in ('Equipe Desenvolvimento','Recepcionista');
     '''
-    #print(query)
     execute(query)
 
 ###################################### ATENDIMENTOS #########################################################
@@ -101,33 +98,25 @@ def atualiza_dados_cartao_tipo_perfil(id_usuario,novo_tipo_usuario):
 def pesquisar_atendimentos(tree, nome_entry, medico_options, data_consulta_entry, horario_options, plano_saude_options, status_options, especialidade_options, cpf_valor):
     engine = conecta_db()
 
-    #print(f'nome_entry: {nome_entry}')
-    #print(f'medico_options: {medico_options}')
-    #print(f'data_consulta_entry: {data_consulta_entry}')
-    #print(f'horario_options: {horario_options}')
-    #print(f'especialidade_options: {especialidade_options}')
-    #print(f'plano_saude_options: {plano_saude_options}')
-    #print(f'status_options: {status_options}')
-    #print(f'cpf:{cpf_valor}')
-
     if  medico_options == '' or status_options == '' or data_consulta_entry == '' or horario_options == '' or  especialidade_options == '':
         messagebox.showerror('Erro!!',message='Preencha pelo menos os campos : Data da consulta, Especialidade, Horário, Status e médico por favor!')
-        return
+        return 'Preencha pelo menos os campos : Data da consulta, Especialidade, Horário, Status e médico por favor!'
     
     else:
+        try:
+            data_consulta_entry = datetime.datetime.strptime(data_consulta_entry, "%d/%m/%Y")
+            data_consulta_entry = data_consulta_entry.strftime("%Y-%m-%d")
+        except:
+            data_consulta_entry =  False
 
-        data_consulta_entry = datetime.datetime.strptime(data_consulta_entry, "%d/%m/%Y")
-        data_consulta_entry = data_consulta_entry.strftime("%Y-%m-%d")
-        
         if data_consulta_entry ==  False:
             messagebox.showerror('Erro!!',message='Insira a data no formato correto (DD/MM/YYYY)!')
-            return
+            return 'Insira a data no formato correto (DD/MM/YYYY)!'
 
         #data_consulta_entry = format.format_data(data_consulta_entry)
         confere_perfil = read(f'''select tipo_usuario from saude.tbl_usuarios where cpf = '{cpf_valor}'
                             ''', engine)
         confere_perfil = confere_perfil['tipo_usuario'][0]
-        #print(f'perfil usuario :{confere_perfil}')
 
         if confere_perfil == 'Equipe Desenvolvimento' or confere_perfil == 'Recepcionista':
             
@@ -147,7 +136,7 @@ def pesquisar_atendimentos(tree, nome_entry, medico_options, data_consulta_entry
         else:
             if  medico_options == '' or plano_saude_options == '' or status_options == '':
                 messagebox.showerror('Erro!!',message='Preencha pelo menos os campos : Médico, Plano de saúde e status por favor!')
-                return
+                return 'Preencha pelo menos os campos : Médico, Plano de saúde e status por favor!'
             else:
                 query = f'''
                     select t1.nome as paciente,t4.nome nome_medico,t2.plano_saude,to_char(t3.data_consulta, 'DD/MM/YYYY') AS data_consulta,t3.horario_consulta,t4.especialidade,t3.status
@@ -166,7 +155,7 @@ def pesquisar_atendimentos(tree, nome_entry, medico_options, data_consulta_entry
             base = pd.DataFrame(base)
             if base.empty:
                 messagebox.showerror('Sem atendimentos',message='Procuramos pelos seus filtros e não foi encontrado nenhum atendimento!')
-                return
+                return 'Procuramos pelos seus filtros e não foi encontrado nenhum atendimento!'
             base = base.values.tolist()
 
             for linha in base:
@@ -174,7 +163,7 @@ def pesquisar_atendimentos(tree, nome_entry, medico_options, data_consulta_entry
             return base
         except:
             
-            return []
+            return base
 
 
 def update_atendimentos(tree, cpf_valor, nome_entry, medico_entry, status_entry, data_consulta_entry, horario_entry):
@@ -182,31 +171,26 @@ def update_atendimentos(tree, cpf_valor, nome_entry, medico_entry, status_entry,
     item_selecionado = tree.focus()
     if not item_selecionado:
         messagebox.showerror('Erro!!',message='nenhum item selecionado!')
-        return
+        return 'nenhum item selecionado!'
     else:
         if nome_entry == '' or  medico_entry == '' or data_consulta_entry == '' or horario_entry == '' or  status_entry == '':
             messagebox.showerror('Erro!!',message='Preencha pelo menos os campos : Paciente,Data da consulta, Horário,médico e status por favor!')
-            return
+            return 'Preencha pelo menos os campos : Paciente,Data da consulta, Horário,médico e status por favor!'
         
         else:
-
-            print('\nupdate atendimentos')
-            #print(f'medico:{medico_entry}')
-            #print(f'status:{status_entry}')
-            #print(f'Data:{data_consulta_entry}')
-            #print(f'horario:{horario_entry}')
-
-            data_consulta_entry = format.format_data(data_consulta_entry)
+            try:
+                data_consulta_entry = format.format_data(data_consulta_entry)
+            except:
+                data_consulta_entry =  False
             if data_consulta_entry ==  False:
                 messagebox.showerror('Erro!!',message='Insira a data no formato correto (DD/MM/YYYY)!')
-                return
+                return 'Insira a data no formato correto (DD/MM/YYYY)!'
 
             else:
 
                 confere_perfil = read(f'''select tipo_usuario from saude.tbl_usuarios where cpf = '{cpf_valor}'
                             ''', engine)
                 confere_perfil = confere_perfil['tipo_usuario'][0]
-                #print(f'perfil usuario :{confere_perfil}')
 
                 if confere_perfil == 'Equipe Desenvolvimento' or confere_perfil == 'Recepcionista':
 
@@ -223,18 +207,20 @@ def update_atendimentos(tree, cpf_valor, nome_entry, medico_entry, status_entry,
                         and t3.data_consulta = '{data_consulta_entry}'
                         and t3.horario_consulta = '{horario_entry}'
                         '''
-                    #print(query_verifica_atendimento)
                     verifica_atendimento = read(query_verifica_atendimento, engine)
-                    #print(f'verificarrr:{verifica_atendimento}')
                     if verifica_atendimento.empty:
                         
                         id_medico = read(f"""select id_medico from saude.tbl_medicos where nome = '{medico_entry}' """, engine)
                         id_medico = id_medico['id_medico'][0]
 
-                        id_paciente= read(f"""select id_usuario from saude.tbl_usuarios where nome = '{nome_entry}' """, engine)
-                        id_paciente = id_paciente['id_usuario'][0]
-                        id_paciente = read(f"""select id_paciente from saude.tbl_pacientes where id_usuario = {id_paciente} """, engine)
-                        id_paciente = id_paciente['id_paciente'][0]
+                        try:
+                            id_paciente= read(f"""select id_usuario from saude.tbl_usuarios where nome = '{nome_entry}' """, engine)
+                            id_paciente = id_paciente['id_usuario'][0]
+                            id_paciente = read(f"""select id_paciente from saude.tbl_pacientes where id_usuario = {id_paciente} """, engine)
+                            id_paciente = id_paciente['id_paciente'][0]
+                        except:
+                            messagebox.showerror('Erro!!',message='Não existe esse paciente cadastrado no nosso sistema!!')
+                            return 'Não existe esse paciente cadastrado no nosso sistema!!'
                     
                         query_update2 = f'''
                             UPDATE saude.tbl_consultas
@@ -243,13 +229,13 @@ def update_atendimentos(tree, cpf_valor, nome_entry, medico_entry, status_entry,
                         '''
                         execute(query_update2)
                         messagebox.showinfo('Sucesso!!',message='Atendimento atualizado com sucesso')
-                        return
+                        return 'Atendimento atualizado com sucesso'
                     else:
                         messagebox.showerror('Erro!!',message='Médico ja possui outro atendimento nessa data e horário!!')
-                        return
+                        return 'Médico ja possui outro atendimento nessa data e horário!!'
                 else:
                     messagebox.showerror('Sem permissão!!',message='Você não pode atualizar nenhum atendimento')
-                    return
+                    return 'Você não pode atualizar nenhum atendimento'
              
 
 def deletar_atendimentos(tree, cpf_valor, medico_options, data_consulta_entry, horario_options, status_options):
@@ -258,19 +244,21 @@ def deletar_atendimentos(tree, cpf_valor, medico_options, data_consulta_entry, h
     confere_perfil = read(f'''select tipo_usuario from saude.tbl_usuarios where cpf = '{cpf_valor}'
                           ''', engine)
     confere_perfil = confere_perfil['tipo_usuario'][0]
-    #print(f'perfil usuario :{confere_perfil}')
 
     item_selecionado = tree.focus()
     if not item_selecionado:
         messagebox.showerror('Erro!!',message='nenhum item selecionado!')
-        return
+        return 'nenhum item selecionado!'
     else:
         if confere_perfil == 'Equipe Desenvolvimento' or confere_perfil == 'Recepcionista':
-
-            data_consulta_entry = format.format_data(data_consulta_entry)
+            try:
+                data_consulta_entry = format.format_data(data_consulta_entry)
+            except:
+                data_consulta_entry =  False
+                
             if data_consulta_entry ==  False:
                 messagebox.showerror('Erro!!',message='Insira a data no formato correto (DD/MM/YYYY)!')
-                return
+                return 'Insira a data no formato correto (DD/MM/YYYY)!'
             else:
 
                 data_consulta_entry = datetime.datetime.strptime(data_consulta_entry, "%d/%m/%Y")
@@ -289,7 +277,6 @@ def deletar_atendimentos(tree, cpf_valor, medico_options, data_consulta_entry, h
                 valor = execute(query_delete2)
 
                 query_delete3 = f"""DELETE FROM saude.tbl_consultas where id_medico = {id_medico} and status = '{status_options}' and horario_consulta = '{horario_options}' and data_consulta = '{data_consulta_entry}'  """
-                #print(query_delete)
                 valor = execute(query_delete3)
                 messagebox.showinfo('Sucesso!!',message='você acabou de excluir um atendimento')
                 for item in tree.get_children():
@@ -297,7 +284,7 @@ def deletar_atendimentos(tree, cpf_valor, medico_options, data_consulta_entry, h
         
         else:
             messagebox.showerror('Sem permissão!!',message='Você não pode excluir nenhum atendimento')
-            return
+            return 'Você não pode excluir nenhum atendimento'
 
 def limpar_campo(tree):
 
@@ -315,21 +302,22 @@ def adicionar_atendimentos(tree, nome_entry, medico_options, data_consulta_entry
 
     if  medico_options == '' or data_consulta_entry == '' or horario_options == ''  or nome_entry == '' or especialidade_options == '':
         messagebox.showerror('Erro!!',message='Preencha pelo menos os campos : Data da consulta, Horário, médico, paciente  e especialidade por favor!')
-        return
+        return 'Preencha pelo menos os campos : Data da consulta, Horário, médico, paciente  e especialidade por favor!'
     
     else:
-
-        data_consulta_entry = datetime.datetime.strptime(data_consulta_entry, "%d/%m/%Y")
-        data_consulta_entry = data_consulta_entry.strftime("%Y-%m-%d")
+        try:
+            data_consulta_entry = datetime.datetime.strptime(data_consulta_entry, "%d/%m/%Y")
+            data_consulta_entry = data_consulta_entry.strftime("%Y-%m-%d")
+        except:
+            data_consulta_entry =  False
         #data_consulta_entry = format.format_data(data_consulta_entry)
         if data_consulta_entry ==  False:
             messagebox.showerror('Erro!!',message='Insira a data no formato correto (DD/MM/YYYY)!')
-            return
+            return 'Insira a data no formato correto (DD/MM/YYYY)!'
 
         confere_perfil = read(f'''select tipo_usuario from saude.tbl_usuarios where cpf = '{cpf_valor}'
                             ''', engine)
         confere_perfil = confere_perfil['tipo_usuario'][0]
-        #print(f'perfil usuario :{confere_perfil}')
 
         if confere_perfil == 'Equipe Desenvolvimento' or confere_perfil == 'Recepcionista':
             
@@ -340,7 +328,7 @@ def adicionar_atendimentos(tree, nome_entry, medico_options, data_consulta_entry
                 id_paciente = id_paciente['id_paciente'][0]
             except:
                 messagebox.showerror('Erro!!',message='O Paciente não possui cadastro na plataforma para ter um atendimento cadastrado')
-                return
+                return 'O Paciente não possui cadastro na plataforma para ter um atendimento cadastrado'
             
 
             id_medico = read(f"""select id_medico from saude.tbl_medicos where nome = '{medico_options}' """, engine)
@@ -360,7 +348,6 @@ def adicionar_atendimentos(tree, nome_entry, medico_options, data_consulta_entry
                 and t4.especialidade = '{especialidade_options}'
                 '''
             verifica_atendimento = read(query_verifica_atendimento, engine)
-            #print(f'verificarrr:{verifica_atendimento}')
             if verifica_atendimento.empty:
                 query_cadastro_atendimento = f'''
                     INSERT INTO "saude"."tbl_consultas" ("id_paciente", "id_medico", "data_consulta", "horario_consulta", "status") VALUES
@@ -368,13 +355,13 @@ def adicionar_atendimentos(tree, nome_entry, medico_options, data_consulta_entry
                 '''
                 execute(query_cadastro_atendimento)
                 messagebox.showinfo('Sucesso!!',message='Atendimento cadastrado com sucesso')
-                return
+                return 'Atendimento cadastrado com sucesso'
             else:
                 messagebox.showerror('Erro!!',message='Médico ja possui outro atendimento nessa data e horário!!')
-                return
+                return 'Médico ja possui outro atendimento nessa data e horário!!'
         else:
             messagebox.showerror('Sem permissão!!',message='Você não pode adicionar nenhum atendimento')
-            return
+            return 'Você não pode adicionar nenhum atendimento'
 
 
 ###################################### RECEITAS #########################################################
@@ -382,29 +369,25 @@ def adicionar_atendimentos(tree, nome_entry, medico_options, data_consulta_entry
 def pesquisar_receita(tree, medico_options, data_consulta_entry, horario_options, cpf_valor):
     engine = conecta_db()
 
-    #print(f'nome_entry: {nome_entry}')
-    #print(f'medico_options: {medico_options}')
-    #print(f'data_consulta_entry: {data_consulta_entry}')
-    #print(f'horario_options: {horario_options}')
-    #print(f'cpf:{cpf_valor}')
     if  medico_options == ''  or data_consulta_entry == '' or horario_options == '':
         messagebox.showerror('Erro!!',message='Preencha pelo menos os campos : Médico, Data da consulta e horário por favor!')
-        return
+        return 'Preencha pelo menos os campos : Médico, Data da consulta e horário por favor!'
+    try:
+        data_consulta_entry = format.format_data(data_consulta_entry)
+    except:
+        data_consulta_entry =  False
 
-    data_consulta_entry = format.format_data(data_consulta_entry)
     if data_consulta_entry ==  False:
         messagebox.showerror('Erro!!',message='Insira a data no formato correto (DD/MM/YYYY)!')
-        return
+        return 'Insira a data no formato correto (DD/MM/YYYY)!'
     else:
 
         data_consulta_entry = datetime.datetime.strptime(data_consulta_entry, "%d/%m/%Y")
         data_consulta_entry = data_consulta_entry.strftime("%Y-%m-%d")
-        #print(f'dddd:{data_consulta_entry}')  # Saída: 2024-10-02
 
         confere_perfil = read(f'''select tipo_usuario from saude.tbl_usuarios where cpf = '{cpf_valor}'
                             ''', engine)
         confere_perfil = confere_perfil['tipo_usuario'][0]
-        #print(f'perfil usuario :{confere_perfil}')
 
         if confere_perfil == 'Equipe Desenvolvimento' or confere_perfil == 'Recepcionista':
             
@@ -424,7 +407,7 @@ def pesquisar_receita(tree, medico_options, data_consulta_entry, horario_options
         else:
             if  medico_options == ''  or data_consulta_entry == '' or horario_options == '':
                 messagebox.showerror('Erro!!',message='Preencha pelo menos os campos : Médico, Data da consulta e horário por favor!')
-                return
+                return 'Preencha pelo menos os campos : Médico, Data da consulta e horário por favor!'
             else:
                 query = f'''
                     select t1.nome,t6.nome medico,to_char(t3.data_consulta, 'DD/MM/YYYY') AS data_consulta,t3.horario_consulta, t4.descricao, t4.medicamentos, t5.descricao atestado
@@ -445,13 +428,13 @@ def pesquisar_receita(tree, medico_options, data_consulta_entry, horario_options
             base = pd.DataFrame(base)
             if base.empty:
                 messagebox.showerror('Sem receita',message='Procuramos pelos seus filtros e não foi encontrado nenhuma receita!')
-                return
+                return 'Procuramos pelos seus filtros e não foi encontrado nenhuma receita!'
             base = base.values.tolist()
             for linha in base:
                 tree.insert("", tk.END, values=linha)
             return base
         except:
-            return []
+            return base
 
 
 def update_receita(tree, cpf_valor, medico_entry, atestado_entry, medicamento_entry, descricao_entry, data_consulta_entry, horario_entry):
@@ -459,31 +442,25 @@ def update_receita(tree, cpf_valor, medico_entry, atestado_entry, medicamento_en
     item_selecionado = tree.focus()
     if not item_selecionado:
         messagebox.showerror('Erro!!',message='nenhum item selecionado!')
-        return
+        return 'nenhum item selecionado!'
     else:
 
         if  medico_entry == ''  or data_consulta_entry == '' or horario_entry == ''  or medicamento_entry == '' or atestado_entry == '':
             messagebox.showerror('Erro!!',message='Preencha pelo menos os campos : Médico, Data da consulta, horário e o medicamento por favor!')
-            return
-            
-        data_consulta_entry = format.format_data(data_consulta_entry)
+            return 'Preencha pelo menos os campos : Médico, Data da consulta, horário e o medicamento por favor!'
+        try:
+            data_consulta_entry = format.format_data(data_consulta_entry)
+        except:
+            data_consulta_entry =  False
+
         if data_consulta_entry ==  False:
             messagebox.showerror('Erro!!',message='Insira a data no formato correto (DD/MM/YYYY)!')
-            return
+            return 'Insira a data no formato correto (DD/MM/YYYY)!'
         else:
-
-            #print('\nupdate receitas')
-            #print(f'atestado_entry:{atestado_entry}')
-            #print(f'medicamento_entry:{medicamento_entry}')
-            #print(f'descricao_entry:{descricao_entry}')
-            #print(f'status:{status_entry}')
-            #print(f'Data:{data_consulta_entry}')
-            #print(f'horario:{horario_entry}')
 
             confere_perfil = read(f'''select tipo_usuario from saude.tbl_usuarios where cpf = '{cpf_valor}'
                         ''', engine)
             confere_perfil = confere_perfil['tipo_usuario'][0]
-            #print(f'perfil usuario :{confere_perfil}')
 
             if confere_perfil == 'Equipe Desenvolvimento' or confere_perfil == 'Recepcionista':
 
@@ -504,14 +481,12 @@ def update_receita(tree, cpf_valor, medico_entry, atestado_entry, medicamento_en
                     and t3.data_consulta = '{data_consulta_entry}'
                     and t3.horario_consulta = '{horario_entry}'
                     '''
-                #print(query_verifica_receita)
                 verifica_receita = read(query_verifica_receita, engine)
-                #print(f'verificarrr:{verifica_receita}')
                 if verifica_receita.empty:
 
                     if  descricao_entry == '' or medicamento_entry == '':
                         messagebox.showerror('Erro!!',message='Preencha pelo menos os campos : medicamento e a descrição por favor!')
-                        return
+                        return 'Preencha pelo menos os campos : medicamento e a descrição por favor!'
 
                     query_update = f'''
                         UPDATE saude.tbl_receitas
@@ -520,13 +495,13 @@ def update_receita(tree, cpf_valor, medico_entry, atestado_entry, medicamento_en
                     '''
                     execute(query_update)
                     messagebox.showinfo('Sucesso!!',message='Receita atualizada com sucesso')
-                    return
+                    return 'Receita atualizada com sucesso'
                 else:
                     messagebox.showerror('Erro!!',message='Já possui uma receita cadastrada com esses filtros!!')
-                    return
+                    return 'Já possui uma receita cadastrada com esses filtros!!'
             else:
                 messagebox.showerror('Sem permissão!!',message='Você não pode atualizar nenhuma receita')
-                return
+                return 'Você não pode atualizar nenhuma receita'
 
 def deletar_receita(tree, cpf_valor, medico_options, data_consulta_entry, horario_options):
 
@@ -534,19 +509,21 @@ def deletar_receita(tree, cpf_valor, medico_options, data_consulta_entry, horari
     confere_perfil = read(f'''select tipo_usuario from saude.tbl_usuarios where cpf = '{cpf_valor}'
                           ''', engine)
     confere_perfil = confere_perfil['tipo_usuario'][0]
-    #print(f'perfil usuario :{confere_perfil}')
 
     item_selecionado = tree.focus()
     if not item_selecionado:
         messagebox.showerror('Erro!!',message='nenhum item selecionado!')
-        return
+        return 'nenhum item selecionado!'
     else:
         if confere_perfil == 'Equipe Desenvolvimento' or confere_perfil == 'Recepcionista':
+            try:
+                data_consulta_entry = format.format_data(data_consulta_entry)
+            except:
+                data_consulta_entry =  False
 
-            data_consulta_entry = format.format_data(data_consulta_entry)
             if data_consulta_entry ==  False:
                 messagebox.showerror('Erro!!',message='Insira a data no formato correto (DD/MM/YYYY)!')
-                return
+                return 'Insira a data no formato correto (DD/MM/YYYY)!'
             else:
 
                 data_consulta_entry = datetime.datetime.strptime(data_consulta_entry, "%d/%m/%Y")
@@ -556,7 +533,6 @@ def deletar_receita(tree, cpf_valor, medico_options, data_consulta_entry, horari
                 id_medico = id_medico['id_medico'][0]
  
                 id_consulta = read(f"""select id_consulta from saude.tbl_consultas where id_medico = {id_medico} and data_consulta = '{data_consulta_entry}' and horario_consulta = '{horario_options}' """, engine)
-                #print(f'id consulta{id_consulta}')
                 id_consulta = id_consulta['id_consulta'][0]
 
                 query_delete1 = f"""DELETE FROM saude.tbl_receitas where id_consulta = {id_consulta} """
@@ -566,7 +542,6 @@ def deletar_receita(tree, cpf_valor, medico_options, data_consulta_entry, horari
                 valor = execute(query_delete2)
 
                 query_delete3 = f"""DELETE FROM saude.tbl_consultas where id_medico = {id_medico} and horario_consulta = '{horario_options}' and data_consulta = '{data_consulta_entry}'  """
-                #print(query_delete)
                 valor = execute(query_delete3)
                 messagebox.showinfo('Sucesso!!',message='você acabou de excluir uma receita')
                 for item in tree.get_children():
@@ -574,7 +549,7 @@ def deletar_receita(tree, cpf_valor, medico_options, data_consulta_entry, horari
         
         else:
             messagebox.showerror('Sem permissão!!',message='Você não pode excluir nenhuma receita')
-            return
+            return 'Você não pode excluir nenhuma receita'
 
 
 def adicionar_receita(tree, nome_entry, medico_options, medicamento_entry, atestado_entry, descricao_entry, data_consulta_entry, horario_options, cpf_valor):
@@ -582,22 +557,23 @@ def adicionar_receita(tree, nome_entry, medico_options, medicamento_entry, atest
 
     if nome_entry == '' or  medico_options == '' or medicamento_entry == '' or atestado_entry == '' or descricao_entry == '' or data_consulta_entry == '' or horario_options == '':
         messagebox.showerror('Erro!!',message='Preencha todos os campos por favor')
-        return
+        return 'Preencha todos os campos por favor'
+    try:
+        data_consulta_entry = format.format_data(data_consulta_entry)
+    except:
+        data_consulta_entry =  False
 
-    data_consulta_entry = format.format_data(data_consulta_entry)
     if data_consulta_entry ==  False:
         messagebox.showerror('Erro!!',message='Insira a data no formato correto (DD/MM/YYYY)!')
-        return
+        return 'Insira a data no formato correto (DD/MM/YYYY)!'
     else:
 
         data_consulta_entry = datetime.datetime.strptime(data_consulta_entry, "%d/%m/%Y")
         data_consulta_entry = data_consulta_entry.strftime("%Y-%m-%d")
-        #print(f'dddd:{data_consulta_entry}')  # Saída: 2024-10-02
 
         confere_perfil = read(f'''select tipo_usuario from saude.tbl_usuarios where cpf = '{cpf_valor}'
                             ''', engine)
         confere_perfil = confere_perfil['tipo_usuario'][0]
-        #print(f'perfil usuario :{confere_perfil}')
 
         if confere_perfil == 'Equipe Desenvolvimento' or confere_perfil == 'Recepcionista':
 
@@ -614,24 +590,52 @@ def adicionar_receita(tree, nome_entry, medico_options, medicamento_entry, atest
                 and t3.data_consulta = '{data_consulta_entry}'
                 and t3.horario_consulta = '{horario_options}'
                 '''
-            #print(query_verifica_receita)
             verifica_receita = read(query_verifica_receita, engine)
-            #print(f'verificar:{verifica_receita}')
             if verifica_receita.empty:
 
-                query_adiciona_receita = '''
+                id_consulta = read(f"""select id_consulta from saude.tbl_consultas order by id_consulta desc limit 1 """, engine)
+                id_consulta = id_consulta['id_consulta'][0]
+                id_consulta = int(id_consulta) + 1
+                
+                id_medico = read(f"""select id_medico from saude.tbl_medicos where nome = '{medico_options}' """, engine)
+                id_medico = id_medico['id_medico'][0]
 
+                try:
+                    id_paciente= read(f"""select id_usuario from saude.tbl_usuarios where nome = '{nome_entry}' """, engine)
+                    id_paciente = id_paciente['id_usuario'][0]
+                    id_paciente = read(f"""select id_paciente from saude.tbl_pacientes where id_usuario = {id_paciente} """, engine)
+                    id_paciente = id_paciente['id_paciente'][0]
+                except:
+                    messagebox.showerror('Erro!!',message='Não existe esse paciente cadastrado no nosso sistema!!')
+                    return 'Não existe esse paciente cadastrado no nosso sistema!!'
+
+                
+                query_adiciona_consulta = f'''
+                        INSERT INTO "saude"."tbl_consultas" ("id_consulta", "id_paciente", "id_medico", "data_consulta", "horario_consulta", "status") VALUES
+                        ({id_consulta}, {id_paciente}, {id_medico}, '{data_consulta_entry}', '{horario_options}', 'Pendente');
                 '''
 
+                query_adiciona_receita = f'''
+                    INSERT INTO "saude"."tbl_receitas" ("id_consulta", "descricao", "medicamentos", "data_emissao") VALUES
+                    ({id_consulta}, '{descricao_entry}', '{medicamento_entry}', '{data_consulta_entry}');
+                '''
+
+                query_adiciona_atestado = f'''
+                    INSERT INTO "saude"."tbl_atestados" ("id_consulta", "descricao", "data_emissao") VALUES
+                    ({id_consulta}, 'Atestado de {atestado_entry}', '{data_consulta_entry}');
+                '''
+                execute(query_adiciona_consulta)
+                execute(query_adiciona_receita)
+                execute(query_adiciona_atestado)
                 messagebox.showinfo('Sucesso!!',message='Receita cadastrada com sucesso')
-                return
+                return 'Receita cadastrada com sucesso'
             else:
                 messagebox.showerror('Erro!!',message='Receita ja existe!!')
-                return
+                return 'Receita ja existe!!'
             
         else:
             messagebox.showerror('Sem permissão!!',message='Você não pode adicionar nenhuma receita')
-            return
+            return 'Você não pode adicionar nenhuma receita'
 
 
 ###### CASO PRECISE DAS BASES

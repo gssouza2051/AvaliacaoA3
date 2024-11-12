@@ -94,7 +94,6 @@ def janela_criar_conta():
         if nome == '' or email == '' or  cpf == '' or telefone == '' or data_nascimento == '' or senha == '':
 
             # Exibir uma mensagem de erro se algum campo estiver vazio
-            #print('Preencha os campos necessários.')
             label_mensagem = ctk.CTkLabel(janela_cadastro, text="Erro!! Por favor, preencha todos os campos.", font=("Arial", 12), bg_color='#fc031c', text_color='black')
             label_mensagem.place(x=480, y=750)
             # Após 2 segundos, remove a mensagem da tela
@@ -103,7 +102,6 @@ def janela_criar_conta():
         elif verifica_email == False or valida_senha == False or data_nascimento == False or telefone == False or cpf == False:
 
             # Exibir uma mensagem de erro se algum campo estiver fora do padrão necessário
-            #print('Algum campo está fora do padrão necessário')
             label_mensagem = ctk.CTkLabel(janela_cadastro, text="Erro!! Por favor, preencha todos os campos no formato correto", font=("Arial", 12), bg_color='#fc031c', text_color='black')
             label_mensagem.place(x=430, y=750)
             janela_cadastro.after(2000, label_mensagem.destroy)
@@ -114,10 +112,8 @@ def janela_criar_conta():
             
             # Verifica se o cpf ja existe
             verifica_cadastro = db.verifica_cadastro(cpf)
-            #print(f'verifica :{verifica_cadastro}')
             if not verifica_cadastro.empty:
                 # Exibir uma mensagem de erro se algum campo estiver fora do padrão necessário
-                #print('cpf ja cadastrado!')
                 label_mensagem = ctk.CTkLabel(janela_cadastro, text="Erro!! CPF já cadastrado!", font=("Arial", 12), bg_color='#fc031c', text_color='black')
                 label_mensagem.place(x=530, y=750)
                 janela_cadastro.after(2000, label_mensagem.destroy)
@@ -166,14 +162,9 @@ def login(janela, cpf_valor, senha_valor):
         label_mensagem.place(x = 50, y = 500)
         janela.after(2000, label_mensagem.destroy)
     else:
-        # Continuar com a lógica de login
-
-        #print(f'Usuario :{cpf_valor}')
-        #print(f'Senha :{senha_valor}')
 
         # Faz a verificação das credenciais no banco
         login = db.pagina_login(cpf_valor, senha_valor)
-        #print(login)
         if not login.empty:
 
             label_mensagem = ctk.CTkLabel(janela, text="Login feito!", font=("Arial", 12), bg_color='#61eb34', text_color='black')
@@ -569,7 +560,6 @@ def janela_cartao_paciente(cpf_valor):
     # Criar os elementos da interface
     
     conta = db.verifica_cadastro(cpf_valor)
-    #print(f'conta em questão é :{conta}')
     id_usuario = int(conta['id_usuario'][0])
     nome = str(conta['nome'][0])
     email =  str(conta['email'][0])
@@ -637,15 +627,11 @@ def janela_cartao_paciente(cpf_valor):
 
         telefone = format.format_telefone(novo_telefone)
         print('\n')
-        #print(f'telefone :{telefone}')
 
         valida_senha = format.valida_senha(nova_senha)
-        #print(f'valida senha :{valida_senha}')
-
         if novo_email == '' and nova_senha == '' and  novo_telefone == '' and telefone == '' and novo_perfil == '':
 
             # Exibir uma mensagem de erro se algum campo estiver vazio
-            #print('Erro!! Por favor, preencha algum campo')
             label_mensagem = ctk.CTkLabel(janela_cartao_paciente, text="Erro!! Por favor, preencha algum campo", font=("Arial", 12), bg_color='#fc031c', text_color='black')
             label_mensagem.place(x=500, y=750)
             janela_cartao_paciente.after(2000, label_mensagem.destroy)
@@ -653,7 +639,6 @@ def janela_cartao_paciente(cpf_valor):
         elif novo_perfil != '':
             if tipo_perfil != 'Equipe Desenvolvimento' and tipo_perfil != 'Recepcionista':
                 # Exibir uma mensagem de erro se algum campo estiver vazio
-                #print('Sem permissão necessária para troca')
                 label_mensagem = ctk.CTkLabel(janela_cartao_paciente, text="Erro!! Sem permissão necessária para troca.", font=("Arial", 12), bg_color='#fc031c', text_color='black')
                 label_mensagem.place(x=500, y=750)
                 janela_cartao_paciente.after(2000, label_mensagem.destroy)
@@ -667,7 +652,6 @@ def janela_cartao_paciente(cpf_valor):
         elif verifica_email == False or valida_senha == False or  telefone == False:
 
             # Exibir uma mensagem de erro se algum campo estiver fora do padrão necessário
-            #print('Algum campo está fora do padrão necessário')
             label_mensagem = ctk.CTkLabel(janela_cartao_paciente, text="Erro!! Por favor, preencha todos os campos no formato correto", font=("Arial", 12), bg_color='#fc031c', text_color='black')
             label_mensagem.place(x=500, y=750)
             janela_cartao_paciente.after(2000, label_mensagem.destroy)
