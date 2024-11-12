@@ -3,6 +3,7 @@ import re
 from unittest.mock import patch
 from modules.format_variables import *  # Importe a função do seu módulo
 
+
 class TestFormatCPF(unittest.TestCase):
 
     print('############### TESTES UNITÁRIOS RELACIONADOS A FORMATAÇÃO DE CPF ############################')

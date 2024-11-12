@@ -728,3 +728,11 @@ def query_historico_receitas():
     base.to_excel(r'C:\Users\biel_\OneDrive\Documentos/tbl_historico_receitas.xlsx')
     return base
 
+'''query_tbl_atestados()
+query_tbl_consultas()
+query_tbl_medicos()
+query_tbl_pacientes()
+query_tbl_receitas()
+query_tbl_usuarios()
+query_historico_atendimentos()
+query_historico_receitas()'''
