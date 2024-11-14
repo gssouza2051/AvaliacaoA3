@@ -63,8 +63,6 @@ class TestBotaoCadastro(unittest.TestCase):
             else:
                 cadastro = cadastro_usuario(nome,email,senha,dt_nascimento,telefone,cpf)
 
-
-
                 mock_query = pd.DataFrame([{'cpf': cpf, 'senha': senha}])
                 mock_query.return_value = mock_query.to_string(index=False)
                 
@@ -80,7 +78,7 @@ class TestBotaoAdicionarAtendimentos(unittest.TestCase):
 
     print('############### TESTES DE INTEGRAÇÃO - Botão de Adicionar na tela de Atendimentos ############################')
 
-    @patch('modules.db.adicionar_atendimentos')
+    @patch('modules.db.atendimentos_adicionar')
     def test_botão_adicionar_atendimentos_ja_existente(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         tree = None
@@ -93,11 +91,11 @@ class TestBotaoAdicionarAtendimentos(unittest.TestCase):
 
         mock_query.return_value = 'Médico ja possui outro atendimento nessa data e horário!!'
         
-        resultado = adicionar_atendimentos(tree, nome, medico, data_consulta, horario_consulta, especialidade, cpf)
+        resultado = atendimentos_adicionar(nome, medico, data_consulta, horario_consulta, especialidade, cpf)
 
         assert resultado == mock_query.return_value
 
-    @patch('modules.db.adicionar_atendimentos')
+    @patch('modules.db.atendimentos_adicionar')
     def test_botão_adicionar_atendimentos_campos_vazios(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         tree = None
@@ -110,11 +108,11 @@ class TestBotaoAdicionarAtendimentos(unittest.TestCase):
 
         mock_query.return_value = 'Preencha pelo menos os campos : Data da consulta, Horário, médico, paciente  e especialidade por favor!'
         
-        resultado = adicionar_atendimentos(tree, nome, medico, data_consulta, horario_consulta, especialidade, cpf)
+        resultado = atendimentos_adicionar(nome, medico, data_consulta, horario_consulta, especialidade, cpf)
 
         assert resultado == mock_query.return_value
 
-    @patch('modules.db.adicionar_atendimentos')
+    @patch('modules.db.atendimentos_adicionar')
     def test_botão_adicionar_atendimentos_paciente_inexistente(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         tree = None
@@ -127,11 +125,11 @@ class TestBotaoAdicionarAtendimentos(unittest.TestCase):
 
         mock_query.return_value = 'O Paciente não possui cadastro na plataforma para ter um atendimento cadastrado'
         
-        resultado = adicionar_atendimentos(tree, nome, medico, data_consulta, horario_consulta, especialidade, cpf)
+        resultado = atendimentos_adicionar(nome, medico, data_consulta, horario_consulta, especialidade, cpf)
 
         assert resultado == mock_query.return_value
 
-    @patch('modules.db.adicionar_atendimentos')
+    @patch('modules.db.atendimentos_adicionar')
     def test_botão_adicionar_atendimentos_permissao_negada(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         tree = None
@@ -144,11 +142,11 @@ class TestBotaoAdicionarAtendimentos(unittest.TestCase):
 
         mock_query.return_value = 'Você não pode adicionar nenhum atendimento'
         
-        resultado = adicionar_atendimentos(tree, nome, medico, data_consulta, horario_consulta, especialidade, cpf)
+        resultado = atendimentos_adicionar(nome, medico, data_consulta, horario_consulta, especialidade, cpf)
 
         assert resultado == mock_query.return_value
 
-    @patch('modules.db.adicionar_atendimentos')
+    @patch('modules.db.atendimentos_adicionar')
     def test_botão_adicionar_atendimentos_data_errada(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         tree = None
@@ -161,7 +159,7 @@ class TestBotaoAdicionarAtendimentos(unittest.TestCase):
 
         mock_query.return_value = 'Insira a data no formato correto (DD/MM/YYYY)!'
         
-        resultado = adicionar_atendimentos(tree, nome, medico, data_consulta, horario_consulta, especialidade, cpf)
+        resultado = atendimentos_adicionar(nome, medico, data_consulta, horario_consulta, especialidade, cpf)
 
         assert resultado == mock_query.return_value
 
@@ -169,7 +167,7 @@ class TestBotaoPesquisarAtendimentos(unittest.TestCase):
 
     print('############### TESTES DE INTEGRAÇÃO - Botão de Pesquisar na tela de Atendimentos ############################')
 
-    @patch('modules.db.pesquisar_atendimentos')
+    @patch('modules.db.atendimentos_pesquisar')
     def test_botão_pesquisar_atendimentos_correto(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         tree = None
@@ -184,11 +182,11 @@ class TestBotaoPesquisarAtendimentos(unittest.TestCase):
 
         mock_query.return_value = [['Camila Ferreira Lima', 'Graciele Almeida Nunes', 'Amil', '03/10/2024', datetime.time(8, 0), 'Fisioterapeuta', 'Pendente']]
 
-        resultado = pesquisar_atendimentos(tree, nome, medico, data_consulta, horario_consulta, plano_saude, status, especialidade, cpf)
+        resultado = atendimentos_pesquisar(nome, medico, data_consulta, horario_consulta, plano_saude, status, especialidade, cpf)
 
         assert resultado == mock_query.return_value
 
-    @patch('modules.db.pesquisar_atendimentos')
+    @patch('modules.db.atendimentos_pesquisar')
     def test_botão_pesquisar_atendimentos_campos_vazios(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         tree = None
@@ -203,11 +201,11 @@ class TestBotaoPesquisarAtendimentos(unittest.TestCase):
 
         mock_query.return_value = 'Preencha pelo menos os campos : Data da consulta, Especialidade, Horário, Status e médico por favor!'
 
-        resultado = pesquisar_atendimentos(tree, nome, medico, data_consulta, horario_consulta, plano_saude, status, especialidade, cpf)
+        resultado = atendimentos_pesquisar(nome, medico, data_consulta, horario_consulta, plano_saude, status, especialidade, cpf)
 
         assert resultado == mock_query.return_value
 
-    @patch('modules.db.pesquisar_atendimentos')
+    @patch('modules.db.atendimentos_pesquisar')
     def test_botão_pesquisar_atendimentos_data_invalida(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         tree = None
@@ -222,11 +220,11 @@ class TestBotaoPesquisarAtendimentos(unittest.TestCase):
 
         mock_query.return_value = 'Insira a data no formato correto (DD/MM/YYYY)!'
 
-        resultado = pesquisar_atendimentos(tree, nome, medico, data_consulta, horario_consulta, plano_saude, status, especialidade, cpf)
+        resultado = atendimentos_pesquisar(nome, medico, data_consulta, horario_consulta, plano_saude, status, especialidade, cpf)
 
         assert resultado == mock_query.return_value
 
-    @patch('modules.db.pesquisar_atendimentos')
+    @patch('modules.db.atendimentos_pesquisar')
     def test_botão_pesquisar_atendimentos_nao_encontrado(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         tree = None
@@ -241,7 +239,7 @@ class TestBotaoPesquisarAtendimentos(unittest.TestCase):
 
         mock_query.return_value = 'Procuramos pelos seus filtros e não foi encontrado nenhum atendimento!'
 
-        resultado = pesquisar_atendimentos(tree, nome, medico, data_consulta, horario_consulta, plano_saude, status, especialidade, cpf)
+        resultado = atendimentos_pesquisar(nome, medico, data_consulta, horario_consulta, plano_saude, status, especialidade, cpf)
 
         assert resultado == mock_query.return_value
 
@@ -300,7 +298,7 @@ class TestBotaoAdicionarReceita(unittest.TestCase):
 
     print('############### TESTES DE INTEGRAÇÃO - Botão de Adicionar na tela de Receita ############################')
 
-    @patch('modules.db.adicionar_receita')
+    @patch('modules.db.receita_adicionar')
     def test_botão_adicionar_receita_ja_existente(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         
@@ -316,11 +314,11 @@ class TestBotaoAdicionarReceita(unittest.TestCase):
 
         mock_query.return_value = 'Receita ja existe!!'
         
-        resultado = adicionar_receita(tree, nome, medico, medicamento, atestado, descricao, data_consulta, horario_consulta, cpf)
+        resultado = receita_adicionar(nome, medico, medicamento, atestado, descricao, data_consulta, horario_consulta, cpf)
 
         assert resultado == mock_query.return_value
     
-    @patch('modules.db.adicionar_receita')
+    @patch('modules.db.receita_adicionar')
     def test_botão_adicionar_receita_campos_vazios(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         
@@ -336,12 +334,12 @@ class TestBotaoAdicionarReceita(unittest.TestCase):
 
         mock_query.return_value = 'Preencha todos os campos por favor'
         
-        resultado = adicionar_receita(tree, nome, medico, medicamento, atestado, descricao, data_consulta, horario_consulta, cpf)
+        resultado = receita_adicionar(nome, medico, medicamento, atestado, descricao, data_consulta, horario_consulta, cpf)
 
         assert resultado == mock_query.return_value
 
     
-    @patch('modules.db.adicionar_receita')
+    @patch('modules.db.receita_adicionar')
     def test_botão_adicionar_receita_data_invalida(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         
@@ -357,12 +355,12 @@ class TestBotaoAdicionarReceita(unittest.TestCase):
 
         mock_query.return_value = 'Insira a data no formato correto (DD/MM/YYYY)!'
         
-        resultado = adicionar_receita(tree, nome, medico, medicamento, atestado, descricao, data_consulta, horario_consulta, cpf)
+        resultado = receita_adicionar(nome, medico, medicamento, atestado, descricao, data_consulta, horario_consulta, cpf)
 
         assert resultado == mock_query.return_value
 
 
-    @patch('modules.db.adicionar_receita')
+    @patch('modules.db.receita_adicionar')
     def test_botão_adicionar_receita_paciente_inexistente(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         
@@ -378,12 +376,12 @@ class TestBotaoAdicionarReceita(unittest.TestCase):
 
         mock_query.return_value = 'Não existe esse paciente cadastrado no nosso sistema!!'
         
-        resultado = adicionar_receita(tree, nome, medico, medicamento, atestado, descricao, data_consulta, horario_consulta, cpf)
+        resultado = receita_adicionar(nome, medico, medicamento, atestado, descricao, data_consulta, horario_consulta, cpf)
 
         assert resultado == mock_query.return_value
 
 
-    @patch('modules.db.adicionar_receita')
+    @patch('modules.db.receita_adicionar')
     def test_botão_adicionar_receita_permissao(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         
@@ -399,7 +397,7 @@ class TestBotaoAdicionarReceita(unittest.TestCase):
 
         mock_query.return_value = 'Você não pode adicionar nenhuma receita'
         
-        resultado = adicionar_receita(tree, nome, medico, medicamento, atestado, descricao, data_consulta, horario_consulta, cpf)
+        resultado = receita_adicionar(nome, medico, medicamento, atestado, descricao, data_consulta, horario_consulta, cpf)
 
         assert resultado == mock_query.return_value
 
@@ -409,7 +407,7 @@ class TestBotaoPesquisarReceita(unittest.TestCase):
 
     print('############### TESTES DE INTEGRAÇÃO - Botão de Pesquisar na tela de Receita ############################')
 
-    @patch('modules.db.pesquisar_receita')
+    @patch('modules.db.receita_pesquisar')
     def test_botão_pesquisar_receita_correta(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         tree = None
@@ -420,12 +418,12 @@ class TestBotaoPesquisarReceita(unittest.TestCase):
 
         mock_query.return_value = [['Otavio Ribeiro Nunes', 'Ana Clara Souza', '15/10/2024', datetime.time(15, 0), 'Corticoide para inflamações e doenças autoimunes', 'Prednisona', 'Atestado de 1 dia']]
         
-        resultado = pesquisar_receita(tree, medico, data_consulta, horario_consulta, cpf)
+        resultado = receita_pesquisar(medico, data_consulta, horario_consulta, cpf)
 
         assert resultado == mock_query.return_value
 
     
-    @patch('modules.db.pesquisar_receita')
+    @patch('modules.db.receita_pesquisar')
     def test_botão_pesquisar_receita_campos_vazios(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         tree = None
@@ -436,12 +434,12 @@ class TestBotaoPesquisarReceita(unittest.TestCase):
 
         mock_query.return_value = 'Preencha pelo menos os campos : Médico, Data da consulta e horário por favor!'
         
-        resultado = pesquisar_receita(tree, medico, data_consulta, horario_consulta, cpf)
+        resultado = receita_pesquisar(medico, data_consulta, horario_consulta, cpf)
 
         assert resultado == mock_query.return_value
 
     
-    @patch('modules.db.pesquisar_receita')
+    @patch('modules.db.receita_pesquisar')
     def test_botão_pesquisar_receita_data_invalida(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         tree = None
@@ -452,12 +450,12 @@ class TestBotaoPesquisarReceita(unittest.TestCase):
 
         mock_query.return_value = 'Insira a data no formato correto (DD/MM/YYYY)!'
         
-        resultado = pesquisar_receita(tree, medico, data_consulta, horario_consulta, cpf)
+        resultado = receita_pesquisar(medico, data_consulta, horario_consulta, cpf)
 
         assert resultado == mock_query.return_value
 
 
-    @patch('modules.db.pesquisar_receita')
+    @patch('modules.db.receita_pesquisar')
     def test_botão_pesquisar_receita_nao_encontrada(self,mock_query):
         # Defina a resposta que você espera do banco de dados
         tree = None
@@ -468,7 +466,7 @@ class TestBotaoPesquisarReceita(unittest.TestCase):
 
         mock_query.return_value = 'Procuramos pelos seus filtros e não foi encontrado nenhuma receita!'
         
-        resultado = pesquisar_receita(tree, medico, data_consulta, horario_consulta, cpf)
+        resultado = receita_pesquisar(medico, data_consulta, horario_consulta, cpf)
 
         assert resultado == mock_query.return_value
 
