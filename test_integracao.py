@@ -58,7 +58,8 @@ class TestBotaoCadastro(unittest.TestCase):
             resultado = verifica_cadastro(cpf)
             if not resultado.empty:
                 # Exibir uma mensagem de erro se algum campo estiver fora do padrão necessário
-                print('CPF ja cadastrado!')
+                #print('CPF ja cadastrado!')
+                pass
                 #raise ValueError('CPF ja cadastrado!')
             else:
                 cadastro = cadastro_usuario(nome,email,senha,dt_nascimento,telefone,cpf)
