@@ -98,20 +98,21 @@ def atualiza_dados_cartao_tipo_perfil(id_usuario,novo_tipo_usuario):
 def pesquisar_atendimentos(tree, nome_entry, medico_options, data_consulta_entry, horario_options, plano_saude_options, status_options, especialidade_options, cpf_valor):
     engine = conecta_db()
 
-    if  medico_options == '' or status_options == '' or data_consulta_entry == '' or horario_options == '' or  especialidade_options == '':
-        messagebox.showerror('Erro!!',message='Preencha pelo menos os campos : Data da consulta, Especialidade, Horário, Status e médico por favor!')
+    if  medico_options == '' or status_options == '' or  especialidade_options == '':
+        messagebox.showerror('Erro!!',message='Preencha pelo menos os campos : Especialidade, Status e médico por favor!')
         return 'Preencha pelo menos os campos : Data da consulta, Especialidade, Horário, Status e médico por favor!'
     
     else:
-        try:
-            data_consulta_entry = datetime.datetime.strptime(data_consulta_entry, "%d/%m/%Y")
-            data_consulta_entry = data_consulta_entry.strftime("%Y-%m-%d")
-        except:
-            data_consulta_entry =  False
+        if data_consulta_entry != '':
+            try:
+                data_consulta_entry = datetime.datetime.strptime(data_consulta_entry, "%d/%m/%Y")
+                data_consulta_entry = data_consulta_entry.strftime("%Y-%m-%d")
+            except:
+                data_consulta_entry =  False
 
-        if data_consulta_entry ==  False:
-            messagebox.showerror('Erro!!',message='Insira a data no formato correto (DD/MM/YYYY)!')
-            return 'Insira a data no formato correto (DD/MM/YYYY)!'
+            if data_consulta_entry ==  False:
+                messagebox.showerror('Erro!!',message='Insira a data no formato correto (DD/MM/YYYY)!')
+                return 'Insira a data no formato correto (DD/MM/YYYY)!'
 
         #data_consulta_entry = format.format_data(data_consulta_entry)
         confere_perfil = read(f'''select tipo_usuario from saude.tbl_usuarios where cpf = '{cpf_valor}'
@@ -129,8 +130,6 @@ def pesquisar_atendimentos(tree, nome_entry, medico_options, data_consulta_entry
                 where t3.status is not NULL
                 and t3.status = '{status_options}'
                 and t4.nome = '{medico_options}'
-                and t3.data_consulta = '{data_consulta_entry}'
-                and t3.horario_consulta = '{horario_options}'
                 and t4.especialidade = '{especialidade_options}'
                 '''
         else:
@@ -147,7 +146,7 @@ def pesquisar_atendimentos(tree, nome_entry, medico_options, data_consulta_entry
                     where t3.status is not NULL
                     and t3.status = '{status_options}'
                     and t4.nome = '{medico_options}'
-                    and t2.plano_saude = '{plano_saude_options}'
+                    and t4.especialidade = '{especialidade_options}'
                     and t1.cpf = '{cpf_valor}'
                     '''
         try:
