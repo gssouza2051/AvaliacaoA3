@@ -369,7 +369,7 @@ def pesquisar_receita(tree, medico_options, data_consulta_entry, horario_options
     engine = conecta_db()
 
     if  medico_options == ''  or data_consulta_entry == '' or horario_options == '':
-        messagebox.showerror('Erro!!',message='Preencha pelo menos os campos : Médico, Data da consulta e horário por favor!')
+        messagebox.showerror('Erro!!',message='Preencha pelo menos os campos : Médico, Data da consulta e horário por favor!!')
         return 'Preencha pelo menos os campos : Médico, Data da consulta e horário por favor!'
     try:
         data_consulta_entry = format.format_data(data_consulta_entry)
