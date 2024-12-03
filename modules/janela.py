@@ -154,8 +154,6 @@ def janela_criar_conta():
 
 
 def login(janela, cpf_valor, senha_valor):
-    cpf_valor = '858.816.885-51'
-    senha_valor = 'Gabigol123.'
     if cpf_valor == '' or senha_valor == '':
         # Exibir uma mensagem de erro se algum campo estiver vazio
         label_mensagem = ctk.CTkLabel(janela, text="Erro!!! Por favor, preencha todos os campos.", font=("Arial", 12), bg_color='#fc031c', text_color='black')
